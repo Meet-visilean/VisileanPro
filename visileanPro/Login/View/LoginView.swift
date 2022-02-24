@@ -14,15 +14,14 @@ class LoginView: UIViewController {
     @IBOutlet var LoginBTN: UIButton!
     @IBOutlet var UsernameTXT: UITextField!
     @IBOutlet var PasswordTXT: UITextField!
-    
+    let modelLogin =  LoginModel(username: usernamee, password: passwordd)
     let login = "login"
     
     @IBOutlet var ForgetPasswordLBL: UIButton!
     @IBOutlet var passwordLBL: UILabel!
     
     
-    var usernameDATA:[String] = UserDefaults.standard.stringArray(forKey: "username") ?? []
-    var PasswordDATA:[String]=UserDefaults.standard.stringArray(forKey: "password") ?? []
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         hidePassword()
@@ -57,7 +56,7 @@ class LoginView: UIViewController {
     @IBAction func LoginBTNclick(_ sender: Any) {
         guard let username = UsernameTXT.text else{return}
         guard let password = PasswordTXT.text else{return}
-        let modelLogin =  LoginModel(username: username, password: password)
+      
         usernamee.self = username
         passwordd.self = password
         
@@ -86,59 +85,45 @@ class LoginView: UIViewController {
                 if let password = PasswordTXT!.text
                 {
                     if(i==1){
-                        APImanager.sharedInstance.callLoginAPI(login: modelLogin) {(result) in
-                            switch result{
-                            case.success(let json):
-                                print(json as AnyObject)
-                                
-                                let username = (json as AnyObject).value(forKey: "username")as! String
-                                print(username)
-                               
-                                //    UserDefaults.standard.set(true,forKey: "Login")
-                                // self.pushTomainscreen()
-                                usernameGLB = username
-                            case.failure(let err):
-                                print(err.localizedDescription)
-                                self.alert(message: "enter valid password")
-                            }
-                            
-                        }
-                        
+                        callLoginApi()
                         if(status.self == true)
                         {
                             
                             UserDefaults.standard.set(true,forKey: "Login")
+                            UserDefaults.standard.set(username,forKey: "username")
                             pushTomainscreen()
                         }
                         else{
                             alert(message: "enter valid password")
                         }
                     }
-                    
+                
                     else
                     {
                         self.i = 1
                     }
                 }
             }
+        }
+    }
+    
+    
+    
+func callLoginApi(){
+    APImanager.sharedInstance.callLoginAPI(login: modelLogin) {(result) in
+        switch result{
+        case.success(let json):
+            print(json as AnyObject)
             
+            let username = (json as AnyObject).value(forKey: "username")as! String
+            print(username)
+
+        case.failure(let err):
+            print(err.localizedDescription)
+            self.alert(message: "enter valid password")
         }
-        
-        
     }
-    
-    
-    func invalidEmail(_ value: String) -> String?
-    {
-        let reqularExpression = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{3,64}"
-        let predicate = NSPredicate(format: "SELF MATCHES %@", reqularExpression)
-        if !predicate.evaluate(with: value)
-        {
-            return "Invalid Email Address"
-        }
-        
-        return nil
-    }
+}
     func hidePassword()
     {
         // submitBTN.isEnabled = false
@@ -153,7 +138,5 @@ class LoginView: UIViewController {
         let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabbar") as! tabbar
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
-    
-    
 }
 

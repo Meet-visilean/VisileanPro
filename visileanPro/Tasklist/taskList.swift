@@ -18,10 +18,10 @@ class taskList: UIViewController {
        
         // Do any additional setup after loading the view.
     }
-//    override func viewWillAppear(_ animated: Bool) { // As soon as vc appears
-//        super.viewWillAppear(true)
-//        self.tabBarController?.tabBar.isHidden = false
-//    }
+    override func viewWillAppear(_ animated: Bool) { // As soon as vc appears
+        super.viewWillAppear(true)
+        self.tabBarController?.tabBar.isHidden = false
+    }
 //
 //    override func viewWillDisappear(_ animated: Bool) { // As soon as vc disappears
 //        super.viewWillDisappear(true)
