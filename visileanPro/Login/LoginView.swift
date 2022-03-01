@@ -21,9 +21,6 @@ class LoginView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginVM.delegate = self
-        
-        
         if (UserDefaults.standard.bool(forKey: "Login") == true)
         {
             pushTomainscreen()
@@ -32,6 +29,8 @@ class LoginView: UIViewController {
             UserDefaults.standard.removeObject(forKey: "email")
             UserDefaults.standard.removeObject(forKey: "password")
         }
+        
+        loginVM.delegate = self
         print(UserDefaultData.sharedInstance.emailGLB)
         print(UserDefaultData.sharedInstance.passwordGLB)
         print(UserDefaultData.sharedInstance.loginGLB)
@@ -43,8 +42,6 @@ class LoginView: UIViewController {
     }
     
     @IBAction func LoginBTNclick(_ sender: Any) {
-        UserDefaults.standard.removeObject(forKey: "email")
-        UserDefaults.standard.removeObject(forKey: "password")
         guard let username = UsernameTXT.text else{return}
         guard let password = PasswordTXT.text else{return}
         UserDefaults.standard.set(username,forKey: "email")

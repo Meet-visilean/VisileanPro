@@ -23,7 +23,9 @@ class APImanager{
         var usernameforurl = UserDefaults.standard.string(forKey:"email") as? String ?? ""
         var passwordforurl =  UserDefaults.standard.string(forKey:"password") as? String ??  ""
         let Loginurl = "https://tgo.visilean.com/VisileanAPI/authenticate?password=\(passwordforurl)&username=\(usernameforurl)"
+        
         let headers : HTTPHeaders = [ .contentType("application/json")]
+        
         AF.request(Loginurl, method: .post, parameters: param, encoder: JSONParameterEncoder.default, headers: headers).response{
             response in debugPrint(response)
             switch response.result{
@@ -38,7 +40,6 @@ class APImanager{
                         completionHandler(.success(json))
                         let xauth = response.response?.value(forHTTPHeaderField: "x-auth-token") as! String
                         UserDefaults.standard.set(xauth,forKey: "TOKEN")
-                        print(UserDefaultData.sharedInstance.tokenGLB)
                         UserDefaults.standard.set(param.password, forKey: "password")
                         UserDefaults.standard.set(param.email,forKey: "email")
                       

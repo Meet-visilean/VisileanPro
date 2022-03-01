@@ -26,12 +26,9 @@ struct ProjectListVM{
                 print(responseArr)
                 if responseArr.status == 1
                 {
-                    for obj in responseArr.result
+                    if responseArr.result.count > 0
                     {
-                        let projObj = ProjectListModel.init(data: obj)
-                        //UserDefault
-//
-                        
+                        let projObj = ProjectListModel.init(data: responseArr.result[0])
                         let ProjectListDict : [String:Any] = [ "actualStartDate" : projObj.actualStartDate,
                                                     "actualEndDate" : projObj.actualEndDate,
                                                     "baselineEndDate" : projObj.baselineEndDate,
@@ -48,10 +45,9 @@ struct ProjectListVM{
                         ]
                      
                         UserDefaults.standard.set(ProjectListDict, forKey:"ProjectListDict")
-                        
-                      //  print(projObj)
-                      
                     }
+                        
+                    
                     DispatchQueue.main.async {
                         self.delegate?.didReceiveProjectResponse(response:ProjectResponse(status: 1, message: ""))
                     }
@@ -59,8 +55,8 @@ struct ProjectListVM{
             case.failure(let err):
                 print(err.localizedDescription)
                 self.delegate?.didReceiveProjectResponse(response:ProjectResponse(status: 0, message: "error"))
-    
-               
+                
+                
             }
             
         }

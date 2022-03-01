@@ -21,8 +21,9 @@ struct ProjectListModel{
     var isWorkflowEnforced = 0;
     var name = "";
     var organisationGuidOfActor = "";
-//    var statistics = Statistics.self
-//    
+
+    init()
+    {}
     init(data : JSON)
     {
         self.actualEndDate = data["actualEndDate"].int ?? 0
@@ -39,16 +40,23 @@ struct ProjectListModel{
         self.organisationGuidOfActor = data["organisationGuidOfActor"].string ?? ""
        // self.statistics = data["statistics"]
     }
+    init (data : [String : Any])
+    {
+        self.actualEndDate = data["actualEndDate"] as? Int ?? 0
+        self.actualStartDate = data["actualStartDate"] as? Int ?? 0
+        self.baselineEndDate = data["baselineEndDate"] as? Int ?? 0
+        self.baselineStartDate = data["baselineStartDate"] as? Int ?? 0
+        self.bimserverPoid = data["bimserverPoid"] as? String ?? ""
+        self.description = data["actualStartDate"] as? String ?? ""
+        self.endDate = data["endDate"] as? Int ?? 0
+        self.guid = data["guid"] as? String ?? ""
+        self.isEnabled = data["isEnabled"] as? Int ?? 0
+        self.isWorkflowEnforced = data["isWorkflowEnforced"] as? Int ?? 0
+        self.name = data["name"] as? String ?? ""
+        self.organisationGuidOfActor = data["organisationGuidOfActor"] as? String ?? ""
+    }
 }
-//struct Statistics {
-//   // let projGUID, completedPercentage, stoppedTasks, warningTasks: String
-//    let weeklyPercentagePlanCompleted: String
-//
-//    init(data : JSON)
-//    {
-//        self.weeklyPercentagePlanCompleted = data["weeklyPercentagePlanCompleted"].string ?? ""
-//    }
-//}
+
 
 
 
