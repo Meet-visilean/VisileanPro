@@ -52,9 +52,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
                 print("currentmaincell")
                 print(SelectedIndex)
                 HeaderCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                
-                
-                
+
             case 1:
                 SelectedIndex = indexPath.row
                 slideToNext()
@@ -62,10 +60,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
                 print("currentmaincell")
                 print(SelectedIndex)
                 HeaderCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                
-                
-                
-                
+   
             case 2:
                 SelectedIndex = indexPath.row
                 slideToNext()
@@ -82,6 +77,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
                 print("03index")
                 HeaderCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
                 print("currentmaincell")
+                headerCell.HeaderLBL.textColor = .red
                 print(SelectedIndex)
                 
                 
@@ -90,7 +86,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
                 slideToNext()
                 print("04index")
                 HeaderCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                
+                headerCell.HeaderLBL.textColor = .red
                 print("currentmaincell")
                 print(SelectedIndex)
                 
@@ -100,7 +96,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
                 print("05index")
                 HeaderCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
                 print("currentmaincell")
-                
+                headerCell.HeaderLBL.textColor = .red
                 print("currentmaincell")
                 print(SelectedIndex)
                 
@@ -112,11 +108,6 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
             //   HeaderCollectionView.reloadData()
         }
     }
-    
-    
-    
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == collectionViewMain
@@ -208,7 +199,6 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
             else if(indexPath.row == 5)
             {
                 headerCell.HeaderLBL.text = "Quality Check"
-                
             }
             
             headerCell.HeaderLBL.textColor = .black

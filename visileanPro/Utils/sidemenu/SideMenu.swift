@@ -44,7 +44,7 @@ class SideMenu: UITableViewController {
             // cell.configure(with:"image1")
             //var image : UIImage = UIImage(named: "image1")!
             
-            cell1.UserNameLBL!.text = usernameGLB
+            cell1.UserNameLBL!.text = UserDefaults.standard.string(forKey: "usernameUserDefault")
             // cell.myIMG.image = image
             return cell1
         }
@@ -146,7 +146,6 @@ class SideMenu: UITableViewController {
         
         if(Int(temp) == 8)
         {
-            // Reset User Defaults
             
             let alert = UIAlertController(title: "LogOut", message: "Are you sure want to LogOut?", preferredStyle: .alert)
             // Create the actions
@@ -154,7 +153,21 @@ class SideMenu: UITableViewController {
                                             UIAlertAction.Style.default) {
                 UIAlertAction in
                 print("Yes Pressed")
+                // Reset User Defaults
+                
+                
+                UserDefaults.standard.removeObject(forKey:"Login")
+                UserDefaults.standard.removeObject(forKey:"TOKEN")
+                UserDefaults.standard.removeObject(forKey:"email")
+                UserDefaults.standard.removeObject(forKey:"password")
+//                emailGLB = "Email Not Found"
+//                passwordGLB = "Password Not Found"
+//                loginGLB = false
+//                tokenGLB = "Token Not Found"
+//                usernameGLB = "Username not Found"
                 UserDefaults.resetDefaults()
+                //Navigate to LoginPage
+                
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "LoginView") as! LoginView
                 vc.modalPresentationStyle = .fullScreen

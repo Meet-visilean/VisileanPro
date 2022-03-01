@@ -8,24 +8,21 @@
 import Foundation
 import UIKit
 
-struct LoginModel:Encodable{
+struct LoginResponse:Encodable{
+    let errorMessage: String?
+    let data: LoginResponseData?
+}
+
+struct LoginResponseData:Encodable{
     let username :String
     let password : String
 }
+
+struct LoginStatusCodeResponse{
+    static var statusCode : Int = 0
+}
+
 var usernamee : String = ""
 var passwordd : String = ""
 
-var status : Bool = false
-
-
-// MARK: - LoginJsonData
-struct LoginJSONData:Codable {
-    let userID: String
-    let username: String
-    let accountNonExpired: Bool
-    let accountNonLocked: Bool
-    let credentialsNonExpired: Bool
-    let enabled: Bool
-    let twoFactorEnable: Bool
-}
 

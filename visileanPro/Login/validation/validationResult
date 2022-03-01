@@ -1,0 +1,17 @@
+//
+//  ValidationModel.swift
+//  visileanPro
+//
+//  Created by Visilean Meet on 28/02/22.
+//
+
+import Foundation
+
+struct LoginRequest : Encodable
+{
+    var userEmail, userPassword: String?
+}
+struct LoginValidationResponse{
+    var result : Bool = false
+    var message : String = ""
+}
