@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 class TaskCell : UICollectionViewCell{
+  
     override init(frame : CGRect){
+        
     super.init(frame: frame)
     backgroundColor = .yellow
     }

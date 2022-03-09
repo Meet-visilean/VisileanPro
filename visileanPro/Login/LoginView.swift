@@ -29,6 +29,7 @@ class LoginView: UIViewController {
             UserDefaults.standard.removeObject(forKey: "email")
             UserDefaults.standard.removeObject(forKey: "password")
         }
+   
         
         loginVM.delegate = self
         print(UserDefaultData.sharedInstance.emailGLB)

@@ -20,10 +20,9 @@ struct ProjectListVM{
         APImanager.sharedInstance.callProjectListApi(param: model){(result) in
             switch result{
             case.success(let json):
-                print(json as AnyObject)
+               /// print(json as AnyObject)
                 
                 let responseArr = responseArray.init(data: JSON(rawValue: json!) ?? "JSON")
-                print(responseArr)
                 if responseArr.status == 1
                 {
                     if responseArr.result.count > 0
@@ -41,7 +40,7 @@ struct ProjectListVM{
                                                     "isWorkflowEnforced" : projObj.isWorkflowEnforced ,
                                                     "name" : projObj.name ,
                                                     "organisationGuidOfActor" : projObj.organisationGuidOfActor ,
-//                                                               "statistics" : projObj.statistics
+                                                               "projectTimeZone" : projObj.projectTimeZone,
                         ]
                      
                         UserDefaults.standard.set(ProjectListDict, forKey:"ProjectListDict")

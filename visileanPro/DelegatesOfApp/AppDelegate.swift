@@ -15,6 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+      //  window?.rootViewController = initialViewController()
+      //  print(window?.rootViewController)
+      //  print(initialViewController())
+       // window?.makeKeyAndVisible()
         IQKeyboardManager.shared.enable = true
  
         return true
@@ -34,3 +38,14 @@ var window: UIWindow?
 
 }
 
+private func initialViewController() -> UIViewController {
+    if (UserDefaults.standard.bool(forKey: "Login") == true){
+        print("tabbar")
+          return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! tabbar
+   
+      } else {
+          print("login")
+          return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginView")
+            
+      }
+  }

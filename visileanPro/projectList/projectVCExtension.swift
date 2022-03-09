@@ -13,20 +13,19 @@ extension dashBoard : ProjectViewModelDelegate
 {
     
     func didReceiveProjectResponse(response: ProjectResponse?){
-
-         if(response?.status == 1)
+        
+        if(response?.status == 1)
         {
-            debugPrint("-------Successssss----------")
-            debugPrint("-------Successssss----------")
+            debugPrint("-------ProjectList----------")
             print(UserDefaults.standard.dictionary(forKey: "ProjectListDict"))
             
         }
         else if (response?.message != nil && response?.status == 0)
         {
             let alert = UIAlertController(title: "Error", message: response?.message , preferredStyle: .alert)
-
+            
             alert.addAction(UIAlertAction(title: "ok", style: .default, handler: nil))
-
+            
             self.present(alert, animated: true)
         }
     }

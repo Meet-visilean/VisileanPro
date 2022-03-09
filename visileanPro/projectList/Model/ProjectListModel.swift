@@ -21,7 +21,8 @@ struct ProjectListModel{
     var isWorkflowEnforced = 0;
     var name = "";
     var organisationGuidOfActor = "";
-
+    var projectTimeZone = ""
+    
     init()
     {}
     init(data : JSON)
@@ -38,7 +39,9 @@ struct ProjectListModel{
         self.isWorkflowEnforced = data["isWorkflowEnforced"].int ?? 0
         self.name = data["name"].string ?? ""
         self.organisationGuidOfActor = data["organisationGuidOfActor"].string ?? ""
-       // self.statistics = data["statistics"]
+        self.projectTimeZone = data["projectTimeZone"].string ?? ""
+        
+        
     }
     init (data : [String : Any])
     {
@@ -54,11 +57,9 @@ struct ProjectListModel{
         self.isWorkflowEnforced = data["isWorkflowEnforced"] as? Int ?? 0
         self.name = data["name"] as? String ?? ""
         self.organisationGuidOfActor = data["organisationGuidOfActor"] as? String ?? ""
+        self.projectTimeZone = data["projectTimeZone"] as? String ?? ""
     }
 }
-
-
-
 
 struct responseArray{
     var status = 0

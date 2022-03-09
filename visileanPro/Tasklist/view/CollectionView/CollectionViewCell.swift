@@ -8,9 +8,16 @@
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableViewDataSource{
+    var TaskList : [TaskListResult]? = nil
     let cellReuseIdentifier = "cell"
     var TitleOfTableview : String = " "
+   // var task
     @IBOutlet var tableView: UITableView!
+    var name : String = "nam"
+    var projecguid = "guid"
+    var startdate : String = "date"
+    var statusoftask : String = "Stausoftask"
+    var color : UIColor?
     var text : String = ""
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -18,7 +25,7 @@ class CollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableViewDa
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return TitleOfTableview
@@ -27,13 +34,28 @@ class CollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableViewDa
         return 3
     }
  
-    
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     
+        print(indexPath.row)
+        print(projecguid)
+            selectedTaskDetail.instance.selectedTask = projecguid
+            
+        
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: cellReuseIdentifier)
-            cell.textLabel?.text = text
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! tableTableViewCell
+
+        cell.NameLBL.text = name
+        cell.startDataLBL.text = startdate
+    
+        
+        color = .red
+        startdate = ""
+        name = ""
+
         return cell
     }
-    
+
 }

@@ -9,8 +9,9 @@ import UIKit
 import SideMenu
 
 class taskList: UIViewController {
-
+  
     @IBOutlet var TasklistView: UIView!
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         TasklistView.layer.cornerRadius = 40
@@ -32,7 +33,9 @@ class taskList: UIViewController {
         let menu = SideMenuNavigationController(rootViewController: SideMenu())
         menu.leftSide=true
         present(menu, animated: true, completion: nil)
+      
+    
     }
-  
+
 
 }

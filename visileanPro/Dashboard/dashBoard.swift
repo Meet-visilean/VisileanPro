@@ -9,29 +9,31 @@ import UIKit
 import SideMenu
 
 class dashBoard: UIViewController {
-    
+
+
     @IBOutlet var DashboardView: UIView!
     var ProjectList = ProjectListVM()
+    var Tasklist = TaskListVM()
     override func viewDidLoad() {
         super.viewDidLoad()
         DashboardView.layer.cornerRadius = 40
+       
         DashboardView.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner)
+        DashboardView.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
         ProjectList.delegate = self
-        
+    
         ProjectList.callProjectListing()
+        
+        Tasklist.callTaskListApi()
+        let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        debugPrint(path[0])
     }
-    
-    
-    
-    @IBAction func TokenReset(_ sender: Any) {
-        print(UserDefaultData.sharedInstance.tokenGLB)
-        UserDefaults.standard.removeObject(forKey:"TOKEN")
-    }
-    
+
     @IBAction func MenuBTNclick(_ sender: Any) {
         let menu = SideMenuNavigationController(rootViewController: SideMenu())
         menu.leftSide=true
         present(menu, animated: true, completion: nil)
+       
     }
     
     
