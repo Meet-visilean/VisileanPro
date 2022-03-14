@@ -7,13 +7,20 @@
 
 import UIKit
 
-class tabbar: UITabBarController {
+
+class tabbar: UITabBarController  {
+    func selectedTab(index: Int) {
+        self.selectedIndex = index
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.navigationController?.isNavigationBarHidden = true
+        
+        
         // Do any additional setup after loading the view.
     }
+    
     
 
     /*

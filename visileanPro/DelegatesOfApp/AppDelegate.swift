@@ -15,12 +15,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-      //  window?.rootViewController = initialViewController()
-      //  print(window?.rootViewController)
-      //  print(initialViewController())
-       // window?.makeKeyAndVisible()
+//        window?.rootViewController = initialViewController()
+//        print(window?.rootViewController)
+//        print(initialViewController())
+//        window?.makeKeyAndVisible()
         IQKeyboardManager.shared.enable = true
  
+        if UserDefaults.standard.bool(forKey: "Login") == true
+        {
+            Globe.shared.setLoginRoot()
+        }
+        else
+        {
+            Globe.shared.setTabbarRoot()
+        }
+        
+        
         return true
     }
 

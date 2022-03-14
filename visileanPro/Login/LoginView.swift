@@ -21,15 +21,6 @@ class LoginView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (UserDefaults.standard.bool(forKey: "Login") == true)
-        {
-            pushTomainscreen()
-        }
-        else{
-            UserDefaults.standard.removeObject(forKey: "email")
-            UserDefaults.standard.removeObject(forKey: "password")
-        }
-   
         
         loginVM.delegate = self
         print(UserDefaultData.sharedInstance.emailGLB)
@@ -51,16 +42,6 @@ class LoginView: UIViewController {
         loginVM.loginUser(loginRequest: request)
         
         
-    }
-    func pushTomainscreen()
-    {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabbar") as! tabbar
-        self.navigationController?.pushViewController(nextViewController, animated: true)
-    }
-    
-    @IBAction func PUSH(_ sender: Any) {
-        pushTomainscreen()
     }
     
 }

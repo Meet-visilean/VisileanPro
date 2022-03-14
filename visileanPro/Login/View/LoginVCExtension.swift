@@ -11,9 +11,10 @@ extension LoginView : LoginViewModelDelegate
             debugPrint("-------Navigate To main Page----------")
             UserDefaults.standard.set(true,forKey: "Login")
          
-            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabbar") as! tabbar
-            self.navigationController?.pushViewController(nextViewController, animated: true)
+            Globe.shared.setTabbarRoot()
+//            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabbar") as! tabbar
+//            self.navigationController?.pushViewController(nextViewController, animated: true)
             
         }
         else if (loginResponse?.errorMessage != nil && loginResponse?.data == nil)

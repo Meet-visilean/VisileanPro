@@ -50,7 +50,7 @@ struct TaskListResult {
     let makeReadyDate: Int
     let parentGUID: String
     let projectGuid: String
-    let status: Int
+    var status: Int
     let constrainingResourceRelations: String
     let constrainedActivity: String
     let owner: String

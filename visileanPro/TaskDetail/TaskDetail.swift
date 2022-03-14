@@ -7,12 +7,15 @@
 
 import UIKit
 
+
 class TaskDetail: UIViewController {
     
+    var taskdata : TaskListResult?
+  
     @IBOutlet var TaskNameLBL: UILabel!
     @IBOutlet var userBL: UILabel!
+    var relodeCollectionView : relodeCollectionViewPC!
     @IBOutlet var orgnameLBL: UILabel!
-    
     @IBOutlet var stopeBTn: UIButton!
     @IBOutlet var startBTN: UIButton!
     @IBOutlet var DateStatusLBL: UILabel!
@@ -22,7 +25,7 @@ class TaskDetail: UIViewController {
     @IBOutlet var QuantitiesLBL: UILabel!
     var quantitiy : Int = 0
     @IBOutlet var statusBTN: UIButton!
-    var selectedprojectguid : String = ""
+    var selectedTaskguid : String = ""
     @IBOutlet var constructionBTN: UIButton!
     @IBOutlet var PriorityBTN: UIButton!
     @IBOutlet var ViewUpper: UIView!
@@ -31,58 +34,74 @@ class TaskDetail: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        selectedprojectguid = selectedTaskDetail.instance.selectedTask
-        print(selectedprojectguid)
-        
-        
-        
-        
-        mainView.backgroundColor = ViewUpper.backgroundColor
+        selectedTaskguid = selectedTaskDetail.instance.selectedTask
+        print(selectedTaskguid)
+      
         ViewUpper.layer.cornerRadius = 100
         ViewUpper.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMaxYCorner)
         viewLower.layer.cornerRadius = 100
         viewLower.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner)
+    
+        UIchange(taskdata: taskdata!)
         
-        //statusBTN.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner)
-        statusBTN.layer.cornerRadius = 20
-        statusBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
-        
-        constructionBTN.layer.cornerRadius = 20
-        constructionBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
-        
-        PriorityBTN.layer.cornerRadius = 20
-        PriorityBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
+    }
+    
+    func UIchange(taskdata : TaskListResult)
+    {
         
         
-        startBTN.layer.cornerRadius = 20
-        startBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
+        TaskNameLBL.text = taskdata.name
+        LocationLBL.text = taskdata.activityLocation
+        orgnameLBL.text = taskdata.orgName
+    
+        quantitiy = taskdata.trackingQuantityEstimate ?? 0
         
-        stopeBTn.layer.cornerRadius = 20
-        stopeBTn.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
-        
-        let taskdata = get(byIdentifier: selectedprojectguid)
-        
-        TaskNameLBL.text = taskdata?.name
-        orgnameLBL.text = taskdata?.orgName
-        
-        quantitiy = taskdata?.trackingQuantityEstimate ?? 0
         QuantitiesLBL.text = String(quantitiy)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
-        let startdate = dateFormatter.string(from: Date(milliseconds: taskdata?.startDate ?? 0))
+        let startdate = dateFormatter.string(from: Date(milliseconds: taskdata.startDate ?? 0))
         DateofTaskLBL.text = startdate
+        //create function for name of status
+        let statusOftask = ( StatusToTaskstatusName(Status: taskdata.status))
+      
+        statusBTN.setTitle(statusOftask.0, for:.normal)
+        //startBTN.backgroundColor = statusOftask.1
+       
+        ViewUpper.backgroundColor = statusOftask.1
+        mainView.backgroundColor = ViewUpper.backgroundColor
+        constructionBTN.setTitle(taskdata.activityType, for: .normal)
+        
+        statusBTN.layer.cornerRadius = 15
+        statusBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
+    
+        
+        constructionBTN.layer.cornerRadius = 15
+        constructionBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
+        
+        PriorityBTN.layer.cornerRadius = 15
+        PriorityBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
         
         
+        startBTN.layer.cornerRadius = 15
+        startBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
+        
+        stopeBTn.layer.cornerRadius = 15
+        stopeBTn.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
     }
     
     @IBAction func StatusBTNclick(_ sender: Any) {
         // let vc = StatusView()
-        let registerViewController = self.storyboard?.instantiateViewController(withIdentifier: "statusViewController") as! statusViewController
-        self.present(registerViewController, animated: true, completion: nil)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "statusViewController") as! statusViewController
+        vc.TaskDetailData = taskdata
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
+        
         
     }
     
+    @IBAction func backBTNclick(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
     @IBAction func TaskTypeBTN(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "TaskType") as! TaskType
         self.present(vc, animated: true, completion: nil)
@@ -93,7 +112,6 @@ class TaskDetail: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
-    
     @IBAction func startBTNtapped(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "startViewController") as! startViewController
         self.present(vc, animated: true, completion: nil)
@@ -102,5 +120,11 @@ class TaskDetail: UIViewController {
     @IBAction func stopedBTNtapped(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "Loader") as! Loader
         self.present(vc, animated: true, completion: nil)
+    }
+}
+extension TaskDetail : changeTaskdetailUI{
+    func changeUI(taskdata: TaskListResult) {
+        relodeCollectionView.reloadcolectionView()
+        UIchange(taskdata: taskdata)
     }
 }

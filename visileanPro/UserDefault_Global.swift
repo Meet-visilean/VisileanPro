@@ -12,7 +12,7 @@ import UIKit
 struct UserDefaultData{
     static let sharedInstance = UserDefaultData()
 
-    var usernameGLB : String = UserDefaults.standard.object(forKey:  "username") as? String ?? ""
+    var usernameGLB : String = UserDefaults.standard.object(forKey:"username") as? String ?? ""
     var emailGLB = UserDefaults.standard.object(forKey:"email") as? String ?? ""
     var passwordGLB = UserDefaults.standard.object(forKey:"password") as? String ?? ""
     var loginGLB = UserDefaults.standard.object(forKey:"Login") as? Bool ?? false

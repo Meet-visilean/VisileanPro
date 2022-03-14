@@ -19,11 +19,16 @@ struct TaskListManager{
     func fetchTask() -> [TaskListResult]? {
         return _TaskListDataRepo.getall()
     }
-    func getTaskDetails(projectGuid : String) -> TaskListCD?
+    func getTaskDetails(guid : String) -> TaskListCD?
     {
-        return _TaskListDataRepo.getTaskDetails(projectGuid: projectGuid)
+        return _TaskListDataRepo.getTaskDetails(byIdentifier: guid)
     }
     
-    
-   
+    func updateTaskStauts(taskListResult: TaskListResult) -> Bool {
+        return _TaskListDataRepo.updateStatusCode(taskListResult: taskListResult)
+    }
+   func gettaskdetaibyguid(guid : String)-> TaskListResult?
+    {
+        return _TaskListDataRepo.get(byIdentifier: guid)
+    }
 }

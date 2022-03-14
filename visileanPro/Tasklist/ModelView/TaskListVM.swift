@@ -8,12 +8,10 @@
 import Foundation
 import SwiftyJSON
 
-//protocol ProjectViewModelDelegate {
-//    func didReceiveProjectResponse(response: ProjectResponse?)
-//}
-struct TaskListVM{
-  //  var delegate : ProjectViewModelDelegate?
 
+struct TaskListVM{
+    //  var delegate : ProjectViewModelDelegate?
+    
     private let manager: TaskListManager = TaskListManager()
     
     func callTaskListApi()
@@ -24,32 +22,40 @@ struct TaskListVM{
         //2629800000 = 30 days
         let endDate = Date().millisecondsSince1970
         let model = TaskListRequestModel.init(actorGUID: UserDefaults.standard.object(forKey: "userGUIDUserDefault") as? String ?? "", startDate: Int64(startDate), endDate: endDate)
-           
+        
         APImanager.sharedInstance.TaskListApicall(param: model){(result) in
             switch result{
             case.success(let json):
-               let resultArr  = TaskListResponseModel.init(data: JSON(rawValue: json!) ?? "JSON")
+                let resultArr  = TaskListResponseModel.init(data: JSON(rawValue: json!) ?? "JSON")
                 if resultArr.status == 1
                 {
-                    if resultArr.result.count > 0
+                    var i = 0
+                    var temp = (resultArr.result.count)
+                    while(temp != 0)
                     {
-                        let TaskListOBJ = TaskListResult.init(data: resultArr.result[0])
-                        print(TaskListOBJ.responsibleactor["name"]!)
-                
-                        manager.createTask(TaskListresult: TaskListOBJ)
-                        //else
-                        
-//                        TaskListData =  manager.fetchTask()
-//                        if([TaskListData].isEmpty)
-//                        {
-//                            manager.createTask(TaskListresult: TaskListOBJ)
-//                        }
-
+                        let TaskListOBJ = TaskListResult.init(data: resultArr.result[i])
+                        let cddata =  manager.fetchTask()
+                        if cddata?.count != 0
+                        {
+                            let taskdata = get(byIdentifier: TaskListOBJ.guid)
+                            if taskdata?.guid == nil
+                            {
+                                print("specific add data to coredata")
+                                manager.createTask(TaskListresult: TaskListOBJ)
+                            }
+                        }
+                        else
+                        {
+                            print("First Time add data to coredata")
+                            manager.createTask(TaskListresult: TaskListOBJ)
+                        }
+                        temp = temp - 1
+                        i = i + 1
                     }
                 }
             case.failure(let err):
                 print(err.localizedDescription)
-             
+                
             }
             
         }

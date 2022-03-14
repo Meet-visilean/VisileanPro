@@ -53,7 +53,7 @@ class SideMenu: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier:"cell",for: indexPath)
             cell.textLabel?.text = items[indexPath.row]
             cell.imageView?.image = UIImage(systemName: ImageDetailMenu[indexPath.row])
-            
+            cell.isUserInteractionEnabled = true
             return cell
         }
         
@@ -106,7 +106,7 @@ class SideMenu: UITableViewController {
                 // cell.configure(with:"image1")
                 
                 cellSignout.SignoutLBL!.text = "Sign Out"
-                // cell.myIMG.image = image
+                
                 return cellSignout
                 
                 
@@ -123,23 +123,27 @@ class SideMenu: UITableViewController {
         tableView.deselectRow(at:indexPath, animated: false)
         let temp = indexPath.row
         
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let tabs = storyboard.instantiateViewController(withIdentifier: "tabbar") as! tabbar
+        
         if(Int(temp) == 1)
         {
-            
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "dashBoard") as! dashBoard
-            vc.modalPresentationStyle = .fullScreen
-            self.navigationController?.pushViewController(vc, animated: false)
+            tabs.selectedIndex = 0
+            Globe.shared.setRootView(navigation: tabs)
         }
         else if(Int(temp) == 2)
         {
+            tabs.selectedIndex = 1
+            Globe.shared.setRootView(navigation: tabs)
+        }
+        else if(Int(temp) == 3)
+        {
             
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "taskList") as! taskList
-            
-            vc.hidesBottomBarWhenPushed = false
-            self.navigationController?.pushViewController(vc, animated: false)
+//            let setting = storyboard.instantiateViewController(withIdentifier: "SettingViewController") as! SettingViewController
+//            let navBar = UINavigationController.init(rootViewController: setting)
+//            tabs.selectedViewController = setting
+//            Globe.shared.setRootWindow(navigation: UINavigationController.init(rootViewController: tabs))
         }
         
         // MARK:  - POTRAIT VS LANDSCAPE
@@ -168,10 +172,7 @@ class SideMenu: UITableViewController {
                 UserDefaults.resetDefaults()
                 //Navigate to LoginPage
                 
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "LoginView") as! LoginView
-                vc.modalPresentationStyle = .fullScreen
-                self.navigationController?.pushViewController(vc, animated: false)
+                Globe.shared.setLoginRoot()
             }
             let cancelAction = UIAlertAction(title: "CANCEL", style:
                                                 UIAlertAction.Style.cancel) {

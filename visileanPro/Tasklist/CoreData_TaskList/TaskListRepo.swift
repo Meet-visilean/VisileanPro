@@ -11,7 +11,7 @@ import CoreData
 protocol TaskListRepo{
     func createTaskList(TaskListresult: TaskListResult)
     func getall() -> [TaskListResult]?
-    func getTaskDetails(projectGuid: String) -> TaskListCD?
+    func getTaskDetails(byIdentifier guid: String) -> TaskListCD?
     
     
 }
@@ -83,25 +83,61 @@ struct TaskListDataRepo : TaskListRepo{
 
     }
     
-     func getTaskDetails(projectGuid: String) -> TaskListCD?
-    {
-        let fetchRequest = NSFetchRequest<TaskListCD>(entityName: "TaskListCD")
-        let predicate = NSPredicate(format: "projectGuid==%@", projectGuid as String)
+//     func getTaskDetails(guid: String) -> TaskListCD?
+//    {
+//        let fetchRequest = NSFetchRequest<TaskListCD>(entityName: "TaskListCD")
+//        let predicate = NSPredicate(format: "guid==%@", guid as String)
+//
+//        fetchRequest.predicate = predicate
+//        do {
+//            let result = try PersistentStorage.shared.context.fetch(fetchRequest).first
+//
+//            guard result != nil else {return nil}
+//
+//            return result
+//
+//        } catch let error {
+//            debugPrint(error)
+//        }
+//
+//        return nil
+//    }
+    func updateStatusCode(taskListResult: TaskListResult) -> Bool {
 
-        fetchRequest.predicate = predicate
-        do {
-            let result = try PersistentStorage.shared.context.fetch(fetchRequest).first
-
-            guard result != nil else {return nil}
-
-            return result
-
-        } catch let error {
-            debugPrint(error)
-        }
-
-        return nil
+        let cdtaskdetail = getTaskDetails(byIdentifier: taskListResult.guid)
+        guard cdtaskdetail != nil else {return false}
+        
+        cdtaskdetail?.status = Int64(taskListResult.status)
+       
+        PersistentStorage.shared.saveContext()
+        return true
     }
 
+    func getTaskDetails(byIdentifier guid: String) -> TaskListCD?
+   {
+       let fetchRequest = NSFetchRequest<TaskListCD>(entityName: "TaskListCD")
+       let predicate = NSPredicate(format: "guid==%@", guid as CVarArg)
+
+       fetchRequest.predicate = predicate
+       do {
+           let result = try PersistentStorage.shared.context.fetch(fetchRequest).first
+
+           guard result != nil else {return nil}
+           return result
+
+       } catch let error {
+           debugPrint(error)
+       }
+
+       return nil
+   }
+   func get(byIdentifier guid: String) -> TaskListResult? {
+
+       let result = getTaskDetails(byIdentifier: guid)
+       guard result != nil else {return nil}
+       return result?.convertToTask()
+       
+   }
+    
     
 }
