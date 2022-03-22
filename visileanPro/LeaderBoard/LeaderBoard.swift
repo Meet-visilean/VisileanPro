@@ -32,7 +32,9 @@ class LeaderBoard: UIViewController {
     @IBOutlet var image1: UIView!
     @IBOutlet var thirdnoView: UIView!
     var ResultDict : [String : Int]?
-    
+    var arrayOfactor : [String] = []
+    var nameactor : [String] = []
+    var enddate  = Date().millisecondsSince1970
     
     //1
     
@@ -81,16 +83,15 @@ class LeaderBoard: UIViewController {
      
         
         //find all actorguid List and store in array
-        let arrayOfactor = LeaderboardVm.findallactorList().0
+        arrayOfactor = LeaderboardVm.findallactorList().0
         dictofactor = LeaderboardVm.findallactorList().1
-        let nameactor = LeaderboardVm.findallactorList().2
+        nameactor = LeaderboardVm.findallactorList().2
         print(arrayOfactor)
        // print(dictofactor)
         print(nameactor)
         
         //guid and date wise search from coreDB
-        ResultDict=LeaderboardVm.guidbydataofCompletedtask(arrayOfactor: arrayOfactor)
-
+      
         
        allTimeWinnnerData()
         
@@ -101,9 +102,22 @@ class LeaderBoard: UIViewController {
         menu.leftSide=true
         present(menu, animated: true, completion: nil)
     }
-    
+    func filldata(name:[String],Score:[String])
+    {
+         
+        Lead1Name.text = dictofactor[name[0]]
+        Lead2name.text = dictofactor[name[1]]
+        lead3Name.text = dictofactor[name[2]]
+        Lead1Score.text = Score[0]
+        lead2Score.text = Score[1]
+        lead3Score.text = Score[2]
+    }
+    // var enddate  = Date().millisecondsSince1970
    func WeeklyWinnerData()
     {
+        //604800000
+        let startdate = (Int(enddate)-604800000)
+        ResultDict=LeaderboardVm.guidbydataofCompletedtask(startdate:startdate ,enddate:Int(enddate) , arrayOfactor:arrayOfactor)
         var arr : [String] = []
         var arrname : [String]=[]
         nameArray = []
@@ -126,18 +140,11 @@ class LeaderBoard: UIViewController {
        
         filldata(name:nameArray,Score:Score)
     }
-    func filldata(name:[String],Score:[String])
-    {
-         
-        Lead1Name.text = dictofactor[name[0]]
-        Lead2name.text = dictofactor[name[1]]
-        lead3Name.text = dictofactor[name[2]]
-        Lead1Score.text = Score[0]
-        lead2Score.text = Score[1]
-        lead3Score.text = Score[2]
-    }
+ 
     func allTimeWinnnerData()
     {
+        
+        ResultDict=LeaderboardVm.guidbydataofCompletedtask(startdate:0 ,enddate:Int(enddate) , arrayOfactor:arrayOfactor)
         var arr : [String] = []
         var arrname : [String]=[]
         nameArray = []
@@ -160,7 +167,9 @@ class LeaderBoard: UIViewController {
     }
     func monthlyWinner()
     {
-        
+      
+        let startdate = (Int(enddate)-2592000000)
+        ResultDict=LeaderboardVm.guidbydataofCompletedtask(startdate:startdate ,enddate:Int(enddate) , arrayOfactor:arrayOfactor)
             var arr : [String] = []
             var arrname : [String]=[]
             nameArray = []

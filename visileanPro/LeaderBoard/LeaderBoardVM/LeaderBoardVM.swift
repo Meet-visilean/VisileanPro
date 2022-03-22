@@ -116,7 +116,7 @@ class LeaderBoardVM{
     
     //guid and date wise search from coreDB
     
-    func guidbydataofCompletedtask(arrayOfactor:[String])->[String : Int]
+    func guidbydataofCompletedtask(startdate : Int,enddate : Int,arrayOfactor:[String])->[String : Int]
     {
         var i = 1
         var dictionary = [String : Int]()
@@ -124,7 +124,7 @@ class LeaderBoardVM{
         var temp = arrayOfactor.count - 1
         while(temp != 0)
         {
-            let val =  manager.getlast7daydataGUIDwise(byIdentifier:arrayOfactor[i], startdate: 0, enddate: 1647455400000)
+            let val =  manager.getlast7daydataGUIDwise(byIdentifier:arrayOfactor[i], startdate: startdate, enddate:enddate)
             dictionary.updateValue(val, forKey:arrayOfactor[i])
             i = i + 1
             temp = temp - 1 
