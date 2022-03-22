@@ -16,8 +16,8 @@ extension dashBoard : ProjectViewModelDelegate
         
         if(response?.status == 1)
         {
-            debugPrint("-------ProjectList----------")
-            print(UserDefaults.standard.dictionary(forKey: "ProjectListDict"))
+            debugPrint("-------ProjectList-success----------")
+           
             
         }
         else if (response?.message != nil && response?.status == 0)

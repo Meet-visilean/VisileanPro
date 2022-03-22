@@ -19,7 +19,7 @@ struct LoginViewVM  {
     func loginUser(loginRequest: LoginRequest)
     {
         let validationResult = LoginValidation().checkValidation(loginrequest: loginRequest)
-        if(validationResult.result)
+        if(validationResult.result == true)
         {
             APImanager.sharedInstance.callLoginAPI(param: loginRequest) {(result) in
                 switch result{

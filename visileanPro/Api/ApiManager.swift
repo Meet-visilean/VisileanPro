@@ -7,6 +7,7 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 
 enum APIerror : Error{
@@ -16,6 +17,7 @@ typealias Handler = (Swift.Result<Any?,APIerror>) -> Void
 var loginviewVm = LoginViewVM()
 var projectlistVm = ProjectListVM()
 var tasklistVm = TaskListVM()
+var leaderBoardVm = LeaderBoardVM()
 class APImanager{
     static let sharedInstance = APImanager()
     
@@ -24,6 +26,7 @@ class APImanager{
     func headers() -> HTTPHeaders {
         let token = UserDefaults.standard.string(forKey: "TOKEN") ?? "TOKEN NOT FOUND"
         print(token)
+        
         let headers: HTTPHeaders = [
             "x-auth-token": token,
             "Content-Type": "application/json",
@@ -42,7 +45,7 @@ class APImanager{
         
         let headers : HTTPHeaders = [ .contentType("application/json")]
         
-        AF.request(Loginurl, method: .post, parameters: param, encoder: JSONParameterEncoder.default, headers: headers).response{
+      let task =  AF.request(Loginurl, method: .post, parameters: param, encoder: JSONParameterEncoder.default, headers: headers).response{
             response in debugPrint(response)
             switch response.result{
             case .success(let data):
@@ -75,7 +78,8 @@ class APImanager{
                 print(err.localizedDescription)
                 completionHandler(.failure(.custom(message: "please try again")))
             }
-        }.resume()
+        }
+            task.resume()
     }
     
     
@@ -88,12 +92,15 @@ class APImanager{
         AF.request(ProjectListURL, method: .get, parameters: Parameters.init(),  headers: headers()).response{
             
             response in debugPrint(response)
+            self.checkAuthenticationToken(statusCode: response.response!.statusCode as Int)
+
             switch response.result{
             case .success(let data):
-                
+                    
                 do{
                     let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                    self.checkAuthenticationToken(statusCode: response.response!.statusCode as Int)
+                    
+                   
                     if(response.response?.statusCode == 200)
                     {
                         completionHandler(.success(json))
@@ -125,17 +132,111 @@ class APImanager{
         AF.request(TasklistURL, method: .get, parameters: Parameters.init(),  headers: headers()).response{
             
             response in debugPrint(response)
+           self.checkAuthenticationToken(statusCode: response.response!.statusCode as Int)
+//            if(response.response?.statusCode == 401)
+//            {
+//                tasklistVm.callTaskListApi()
+//
+//            }
             switch response.result{
             case .success(let data):
+                
                 print(response)
                 do{
                     let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                    self.checkAuthenticationToken(statusCode: response.response!.statusCode as Int)
-                    if(response.response?.statusCode == 200)
+                    
+                    if(response.response?.statusCode == 200 )
                     {
                         completionHandler(.success(json))
                        
+                    }
+                    else{
+                        completionHandler(.failure(.custom(message: "Please check Network Conn")))
+                    }
+                    
+                }catch let error{
+                    print(error.localizedDescription)
+                    completionHandler(.failure(.custom(message: "please try again")))
+                }
+                
+            case .failure(let err):
+                print(err.localizedDescription)
+                completionHandler(.failure(.custom(message: "please try again")))
+            }
+        }.resume()
+    }
+
+
+//MARK: - Late_start_reasons
+func LastestartAPIcall(param :String,completionHandler :@escaping Handler ){
+//https://tgo.visilean.com/VisileanAPI/api/custom/reason/project/LATE_START_COMPLETION
+   
+    let latestartUrl =  "https://tgo.visilean.com/VisileanAPI/api/custom/reason/project/\(param)/LATE_START_COMPLETION"
+    
+    AF.request(latestartUrl, method: .get, parameters: Parameters.init(), headers: headers()).response{
+        response in debugPrint(response)
+        self.checkAuthenticationToken(statusCode: response.response!.statusCode as Int)
+        switch response.result{
+        case .success(let data):
+                
+            do{
+                let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                
+               
+                if(response.response?.statusCode == 200)
+                {
+                    completionHandler(.success(json))
+                    //  print(json)
+                }
+                else{
+                    completionHandler(.failure(.custom(message: "Please check Network Conn")))
+                }
+                
+            }catch let error{
+                print(error.localizedDescription)
+                completionHandler(.failure(.custom(message: "please try again")))
+            }
+            
+        case .failure(let err):
+            print(err.localizedDescription)
+            completionHandler(.failure(.custom(message: "please try again")))
+        }
+    }.resume()
+}
+
+
+
+
+//MARK: - ALLCOMPLETEDTASKLIST_API
+
+    func allcompletedtask(skip : Int, completionHandler :@escaping Handler ){
+  
+        // https://tgo.visilean.com/VisileanAPI/api/filter/get/activities
+
+        let allcompletedtaskURL = "https://tgo.visilean.com/VisileanAPI/api/filter/get/activities"
+      
+        let leaderboardmodel:LeaderBoardModel = LeaderBoardModel(activityTypes: ["DESIGN", "CONSTRUCTION"], projectGuid: "D438E2B5-7EA3-C620-38CF-4D3147E14BEC", sortDir: "ASC", dateEndCondition: "BEFOREON", limit: 50, isLeafOnly: true, skip: skip, sortField: "actualEndDate", depth: 0, recursive: false, dateStartCondition: "AFTERON", isFilterApplied: false, mulStatus: ["7"])
+       
+   
+        AF.request(allcompletedtaskURL, method: .post,parameters: leaderboardmodel, encoder: JSONParameterEncoder.default,  headers: headers()).response{
+            
+            response in debugPrint(response)
+           self.checkAuthenticationToken(statusCode: response.response!.statusCode as Int)
+
+            switch response.result{
+            case .success(let data):
+                
+                print(response)
+                
+                do{
+                
+                   let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                    
+                    if(response.response?.statusCode == 200 )
+                    {
                         
+                        completionHandler(.success(json))
+
                     }
                     else{
                         completionHandler(.failure(.custom(message: "Please check Network Conn")))
@@ -154,16 +255,35 @@ class APImanager{
     }
 }
 
+//MARK: - 401 ERROR HANDLE
+
 extension APImanager{
     func checkAuthenticationToken(statusCode : Int)
     {
         if(statusCode == 401)
         {
-            loginviewVm.loginUser(loginRequest:(LoginRequest(email: UserDefaultData.sharedInstance.emailGLB, password: UserDefaultData.sharedInstance.passwordGLB)))
-            projectlistVm.callProjectListing()
-            tasklistVm.callTaskListApi()
-            
+            callLoginAPI(param: (LoginRequest(email: UserDefaultData.sharedInstance.emailGLB, password: UserDefaultData.sharedInstance.passwordGLB))){(result) in
+                    switch result{
+                    case.success(let json):
+                        let usernameFromResponse = (json as AnyObject).value(forKey: "username")as! String
+                        let userGUIDFromResponse = (json as AnyObject).value(forKey: "userId")as! String
+                        UserDefaults.standard.set(usernameFromResponse,forKey: "usernameUserDefault")
+                        UserDefaults.standard.set(userGUIDFromResponse,forKey: "userGUIDUserDefault")
+                        print(usernameFromResponse)
+                        print(userGUIDFromResponse)
+                        DispatchQueue.main.async {
+                            UserDefaults.standard.set(true,forKey: "Login")
+                            Globe.shared.setTabbarRoot()
+                        }
+                    case.failure(let err):
+                        print(err.localizedDescription)
+                       
+                    }
+                }
+ 
         }
+        print("--------------------------")
+    
     }
     
     

@@ -17,10 +17,7 @@ protocol TaskListRepo{
 }
 
 struct TaskListDataRepo : TaskListRepo{
-  
-    
-   
-    
+
     //-----add data into Core Data-----
     func createTaskList(TaskListresult: TaskListResult) {
         
@@ -70,9 +67,7 @@ struct TaskListDataRepo : TaskListRepo{
         PersistentStorage.shared.saveContext()
     }
     
-    //---update
-    //--delete
-    //--fetch all data
+    
     func getall() -> [TaskListResult]? {
         let result =  PersistentStorage.shared.fetchManagedObject(managedObject: TaskListCD.self)
         var TaskList : [TaskListResult] = []
@@ -82,26 +77,7 @@ struct TaskListDataRepo : TaskListRepo{
         return TaskList
 
     }
-    
-//     func getTaskDetails(guid: String) -> TaskListCD?
-//    {
-//        let fetchRequest = NSFetchRequest<TaskListCD>(entityName: "TaskListCD")
-//        let predicate = NSPredicate(format: "guid==%@", guid as String)
-//
-//        fetchRequest.predicate = predicate
-//        do {
-//            let result = try PersistentStorage.shared.context.fetch(fetchRequest).first
-//
-//            guard result != nil else {return nil}
-//
-//            return result
-//
-//        } catch let error {
-//            debugPrint(error)
-//        }
-//
-//        return nil
-//    }
+
     func updateStatusCode(taskListResult: TaskListResult) -> Bool {
 
         let cdtaskdetail = getTaskDetails(byIdentifier: taskListResult.guid)

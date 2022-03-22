@@ -11,7 +11,8 @@ import UIKit
 class TaskDetail: UIViewController {
     
     var taskdata : TaskListResult?
-  
+   
+    
     @IBOutlet var TaskNameLBL: UILabel!
     @IBOutlet var userBL: UILabel!
     var relodeCollectionView : relodeCollectionViewPC!
@@ -34,6 +35,7 @@ class TaskDetail: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+      
         selectedTaskguid = selectedTaskDetail.instance.selectedTask
         print(selectedTaskguid)
       
@@ -90,10 +92,12 @@ class TaskDetail: UIViewController {
     }
     
     @IBAction func StatusBTNclick(_ sender: Any) {
-        // let vc = StatusView()
+      
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "statusViewController") as! statusViewController
+     
         vc.TaskDetailData = taskdata
         vc.delegate = self
+        
         self.present(vc, animated: true, completion: nil)
         
         
@@ -126,5 +130,6 @@ extension TaskDetail : changeTaskdetailUI{
     func changeUI(taskdata: TaskListResult) {
         relodeCollectionView.reloadcolectionView()
         UIchange(taskdata: taskdata)
+      
     }
 }

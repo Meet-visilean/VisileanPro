@@ -121,10 +121,10 @@ class CollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableViewDa
         dateFormatter.dateFormat = "dd MMM "
         let startdate = dateFormatter.string(from: Date(milliseconds: obj.startDate ))
         cell.startDataLBL.text = startdate
-       var ST = StatusToTaskstatusName(Status: obj.status)
+        var ST = StatusToTaskstatusName(Status: obj.status)
         cell.statusBTN.setTitle(ST.0, for: .normal)
         cell.statusBTN.backgroundColor = ST.1
-        print("reload-table")
+    
         return cell
         
     }

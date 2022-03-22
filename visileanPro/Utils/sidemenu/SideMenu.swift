@@ -11,8 +11,8 @@ import SideMenu
 class SideMenu: UITableViewController {
     
     var menu : SideMenuNavigationController?
-    var items = ["","Dashboard","TaskList"]
-    var ImageDetailMenu = ["house","message","person"]
+    var items = ["","Dashboard","TaskList","LeaderBoard"]
+    var ImageDetailMenu = ["house","house","list.bullet","person.fill"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +33,7 @@ class SideMenu: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 9
+        return 6
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,7 +48,7 @@ class SideMenu: UITableViewController {
             // cell.myIMG.image = image
             return cell1
         }
-        if(indexPath.row == 1 || indexPath.row == 2 )
+        if(indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 3 )
         {
             let cell = tableView.dequeueReusableCell(withIdentifier:"cell",for: indexPath)
             cell.textLabel?.text = items[indexPath.row]
@@ -57,98 +57,58 @@ class SideMenu: UITableViewController {
             return cell
         }
         
-        // MARK:  - POTRAIT VS LANDSCAPE
-        if UIDevice.current.orientation == .portrait {
-            if(indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 5 || indexPath.row == 6  )
-            {
-                let cell = tableView.dequeueReusableCell(withIdentifier:"cell",for: indexPath)
-                cell.textLabel?.text = " "
-                cell.isUserInteractionEnabled = false
-                
-                return cell
-            }
-            else if(indexPath.row == 7 )
-            {
-                let cell = tableView.dequeueReusableCell(withIdentifier:"cell",for: indexPath)
-                cell.textLabel?.text = " _____________"
-                cell.isUserInteractionEnabled = false
-                
-                return cell
-            }
+        if(indexPath.row == 4 )
+        {
+            let cell = tableView.dequeueReusableCell(withIdentifier:"cell",for: indexPath)
+            cell.textLabel?.text = " _____________"
+            cell.isUserInteractionEnabled = false
             
-            else if(indexPath.row == 8 )
-            {
-                let cellSignout = tableView.dequeueReusableCell(withIdentifier:"signoutCell",for: indexPath) as! signoutCell
-                // cell.configure(with:"image1")
-                
-                cellSignout.SignoutLBL!.text = "Sign Out"
-                // cell.myIMG.image = image
-                
-                return cellSignout
-                
-                
-            }
-            tableView.reloadData()
-        } else {
-            //  cellSignout.isUserInteractionEnabled = false
-            if(indexPath.row == 3 )
-            {
-                let cell = tableView.dequeueReusableCell(withIdentifier:"cell",for: indexPath)
-                cell.textLabel?.text = " _____________"
-                cell.isUserInteractionEnabled = false
-                
-                return cell
-                //second cell
-            }
-            else if(indexPath.row == 4 )
-            {
-                let cellSignout = tableView.dequeueReusableCell(withIdentifier:"signoutCell",for: indexPath) as! signoutCell
-                // cell.configure(with:"image1")
-                
-                cellSignout.SignoutLBL!.text = "Sign Out"
-                
-                return cellSignout
-                
-                
-            }
-            tableView.reloadData()
+            return cell
+            //second cell
         }
+            if(indexPath.row == 5 )
+            {
+                let cellSignout = tableView.dequeueReusableCell(withIdentifier:"signoutCell",for: indexPath) as! signoutCell
+                // cell.configure(with:"image1")
+                
+                cellSignout.SignoutLBL!.text = "Sign Out"
+                
+                return cellSignout
+                
+                
+            }
+          
         
+        tableView.reloadData()
         
         return cell
         
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at:indexPath, animated: false)
-        let temp = indexPath.row
-        
+      //  tableView.deselectRow(at:indexPath, animated: false)
+       
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let tabs = storyboard.instantiateViewController(withIdentifier: "tabbar") as! tabbar
         
-        if(Int(temp) == 1)
+        if(indexPath.row == 1)
         {
             tabs.selectedIndex = 0
             Globe.shared.setRootView(navigation: tabs)
         }
-        else if(Int(temp) == 2)
+        else if(indexPath.row == 2)
         {
             tabs.selectedIndex = 1
             Globe.shared.setRootView(navigation: tabs)
         }
-        else if(Int(temp) == 3)
+        else if(indexPath.row == 3)
         {
+            tabs.selectedIndex = 2
+            Globe.shared.setRootView(navigation: tabs)
             
-//            let setting = storyboard.instantiateViewController(withIdentifier: "SettingViewController") as! SettingViewController
-//            let navBar = UINavigationController.init(rootViewController: setting)
-//            tabs.selectedViewController = setting
-//            Globe.shared.setRootWindow(navigation: UINavigationController.init(rootViewController: tabs))
         }
-        
-        // MARK:  - POTRAIT VS LANDSCAPE
-        
-        if(Int(temp) == 8)
+        else if(indexPath.row == 5)
         {
             
             let alert = UIAlertController(title: "LogOut", message: "Are you sure want to LogOut?", preferredStyle: .alert)
@@ -164,13 +124,8 @@ class SideMenu: UITableViewController {
                 UserDefaults.standard.removeObject(forKey:"TOKEN")
                 UserDefaults.standard.removeObject(forKey:"email")
                 UserDefaults.standard.removeObject(forKey:"password")
-//                emailGLB = "Email Not Found"
-//                passwordGLB = "Password Not Found"
-//                loginGLB = false
-//                tokenGLB = "Token Not Found"
-//                usernameGLB = "Username not Found"
+
                 UserDefaults.resetDefaults()
-                //Navigate to LoginPage
                 
                 Globe.shared.setLoginRoot()
             }

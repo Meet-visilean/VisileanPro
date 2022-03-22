@@ -16,7 +16,7 @@ class statusViewController: UIViewController {
     @IBOutlet var mainView: UIView!
     
     //MARK :- status BTN
-    
+    var currentdate : Int = 0
     @IBOutlet var notcommittedBTN: UIButton!
     private let manager = TaskListManager()
     @IBOutlet var readyBTN: UIButton!
@@ -24,14 +24,27 @@ class statusViewController: UIViewController {
     var delegate : changeTaskdetailUI!
     @IBOutlet var forcereadyBTN: UIButton!
     var TaskDetailData : TaskListResult?
+    var dprmodel : DPRmodel?
+    var reasonsForlate : [String] = []
+    private let dprmanager = DPRmanager()
     @IBOutlet var qualitycheckedBTN: UIButton!
     @IBOutlet var rejectedBTN: UIButton!
     @IBOutlet var completeBTN: UIButton!
     @IBOutlet var stoppedBTN: UIButton!
     @IBOutlet var warningBTN: UIButton!
     @IBOutlet var startedBTN: UIButton!
-
-  
+    @IBOutlet var notcommitLBL: UILabel!
+    @IBOutlet var notRedy: UILabel!
+    @IBOutlet var redyLBL: UILabel!
+    @IBOutlet var forceLBL: UILabel!
+    @IBOutlet var startedLBL: UILabel!
+    @IBOutlet var warningLBL: UILabel!
+    @IBOutlet var stoppedLBL: UILabel!
+    @IBOutlet var rejectedLBL: UILabel!
+    @IBOutlet var completeLBL: UILabel!
+    
+    
+    @IBOutlet var qaLBL: UILabel!
     let radioController: RadioButtonController = RadioButtonController()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,11 +59,23 @@ class statusViewController: UIViewController {
      
         closeBTN.addShadow(offset: CGSize.init(width: 2, height: 3), color: UIColor.black, radius: 3, opacity: 0.35)
         radioController.buttonsArray = [notcommittedBTN,readyBTN,notreadyBTN,forcereadyBTN,qualitycheckedBTN,rejectedBTN,completeBTN,completeBTN,stoppedBTN,warningBTN,startedBTN]
-       let defaultselectedBTN = defaultSelect(Status: TaskDetailData!.status)
-               radioController.defaultButton = defaultselectedBTN
-        // Do any additional setup after loading the view.
+
+      
+        UIchange()
+       
     }
-    
+   func UIchange()
+    {
+        let updatedTask =  manager.gettaskdetaibyguid(guid: TaskDetailData!.guid)
+        let defaultselectedBTN = defaultSelect(Status: updatedTask!.status)
+        
+         radioController.defaultButton = defaultselectedBTN.0
+            
+      
+        var enablestatus =  callForWorkForceOn(currentStatus: updatedTask!.status)
+         disable(array : enablestatus)
+         
+    }
 
     @IBAction func CloseBTNtapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -100,20 +125,64 @@ class statusViewController: UIViewController {
     
     
     @IBAction func submitBTNclick(_ sender: Any) {
+        
         let selectedBTNcode =  SelectedBTNstatusCode()
         var taskdetail = TaskDetailData
         taskdetail?.status = selectedBTNcode
-
-      manager.updateTaskStauts(taskListResult: taskdetail!)
       
-       
-        let updatedTask =  manager.gettaskdetaibyguid(guid: taskdetail!.guid)
-        print(updatedTask as Any)
-        self.dismiss(animated: true, completion: nil)
-     
-        delegate.changeUI(taskdata: updatedTask!)
+        currentdate = Int(Date().millisecondsSince1970)
+        var resonpageshow4 : Bool = false
+        var resonpageshow7 : Bool = false
+        
+        if(taskdetail!.actualStartDate < currentdate)
+        //if start actual date is missed
+            {resonpageshow4 = true}
+        else
+            {resonpageshow4 = false}
+        
+        if(taskdetail!.actualEndDate < currentdate)
+        //if start actual enddate is missed OR complete late
+            {resonpageshow7 = true}
+        else
+            {resonpageshow7 = false}
+        
+        
+        if((selectedBTNcode == 4 && resonpageshow4 == true) || (selectedBTNcode == 7 && resonpageshow7 == true) || selectedBTNcode == 5 || selectedBTNcode == 6 )
+        {
+            if(reasonsForlate.count == 0)
+            {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "startViewController") as! startViewController
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
+                
+            }
+            else{
+                manager.updateTaskStauts(taskListResult: taskdetail!)
+               
+                let updatedTask =  manager.gettaskdetaibyguid(guid: taskdetail!.guid)
+                dprmanager.createDPR(DPRmodel: updatedTask!, acurrentdate: currentdate,latestartreason: reasonsForlate)
+                self.dismiss(animated: true, completion: nil)
+
+                delegate.changeUI(taskdata: updatedTask!)
+            }
+          
+        }
+    
+  
+        else{
+            manager.updateTaskStauts(taskListResult: taskdetail!)
+           
+            let updatedTask =  manager.gettaskdetaibyguid(guid: taskdetail!.guid)
+            currentdate = Int(Date().millisecondsSince1970)
+            dprmanager.createDPR(DPRmodel: updatedTask!, acurrentdate: currentdate,latestartreason: reasonsForlate)
+            self.dismiss(animated: true, completion: nil)
+    
+            delegate.changeUI(taskdata: updatedTask!)
+        }
+        
       
     }
+    
     
     private func displayAlert(alertMessage:String)
     {
@@ -135,8 +204,70 @@ class statusViewController: UIViewController {
         self.present(errorAlert, animated: true)
     }
 
+    func callForWorkForceOn(currentStatus : Int ) -> [Int]
+      {
+      
+          var enableStatus : [Int] = []
+        if currentStatus == 0
+        {
+          enableStatus = [2,4,5,6,7,8,9]        //0,1,3
+        }
+        else if currentStatus == 1
+        {
+          enableStatus = [0,2,4,5,6,7,8,9]  //1,3
+        }
+        else if currentStatus == 2
+        {
+          enableStatus = [0,1,3,5,6,7,8,9]      //2,4
+        }
+        else if currentStatus == 3
+        {
+            enableStatus = [0,1,2,5,6,7,8,9]      //3,4
+        }
+        else if currentStatus == 4
+        {
+          enableStatus = [0,1,2,3,8,9]  //4,5,6,7
+        }
+        else if currentStatus == 5
+        {
+          enableStatus = [0,1,2,3,7,8,9]    //4,5,6
+        }
+        else if currentStatus == 6
+        {
+          enableStatus = [0,1,2,3,5,7,8,9]      //4,6
+        }
+        else if currentStatus == 7
+        {
+          enableStatus = [0,1,2,3,4,5,6]    //7,8,9
+        }
+        else if currentStatus == 8
+        {
+          enableStatus = [0,1,2,3,5,6,7,9] //4,8
+        }
+        else if currentStatus == 9
+        {
+          enableStatus = [0,1,2,3,4,5,6,7,8]   //9
+        }
+          return  enableStatus
+      }
     
-    
+    func disable(array : [Int]){
+        var i = 0
+        
+        var temp = array.count
+        //[4,8]
+        while (temp != 0)
+        {
+            let index =  defaultSelect(Status: array[i])
+            index.0.isUserInteractionEnabled = false
+            index.0.backgroundColor = .systemGray6
+            index.1.textColor = UIColor.systemGray6
+            //btn.isEnabled = false
+            i = i + 1
+            temp = temp - 1
+        }
+      //  editButton.userInteractionEnabled = false
+    }
     func SelectedBTNstatusCode()->Int
     {
         var statusCode = 0
@@ -184,35 +315,42 @@ class statusViewController: UIViewController {
         return statusCode
     }
    
-        func defaultSelect(Status : Int) -> UIButton{
+    func defaultSelect(Status : Int) -> (UIButton,UILabel){
             
             switch (Status)  {
             case 0:
-                return (notcommittedBTN)
-                
+                return (notcommittedBTN,notcommitLBL)
             case 1:
-                return (notreadyBTN)
+                return (notreadyBTN,notRedy)
             case 2:
-                return (readyBTN)
+                return (readyBTN,redyLBL)
             case 3:
-                return (forcereadyBTN)
+                return (forcereadyBTN,forceLBL)
             case 4:
-                return (startedBTN)
+                return (startedBTN,startedLBL)
             case 5:
-                return (warningBTN)
+                return (warningBTN,warningLBL)
             case 6:
-                return (stoppedBTN)
+                return (stoppedBTN,stoppedLBL)
             case 7:
-                return (completeBTN)
+                return (completeBTN,completeLBL)
             case 8:
-                return (rejectedBTN)
+                return (rejectedBTN,rejectedLBL)
             case 9:
-                return (qualitycheckedBTN)
+                return (qualitycheckedBTN,qaLBL)
             default:
                 break
             }
-            return (readyBTN)
+            return (readyBTN,redyLBL)
         }
+    
+    
+}
+extension statusViewController : resonforlateonstart {
+    func sendresonTochangestatus(arr: [String]) {
+        reasonsForlate = arr
+       
+    }
     
     
 }

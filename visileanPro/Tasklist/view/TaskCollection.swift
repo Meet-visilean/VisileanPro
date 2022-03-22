@@ -106,13 +106,13 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
             case 4:
                 SelectedIndex = indexPath.row
                 slideToNext()
-                print("04index")
+             
                 HeaderCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
                 
             case 5:
                 SelectedIndex = indexPath.row
                 slideToNext()
-                print("05index")
+             
                 HeaderCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
                 
             default:  print("break")
@@ -132,7 +132,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
             cell.taskClickDelegate = self
             cell.collectionIndex = indexPath.row//SelectedIndex
             cell.setupTableData()
-            print("colo reload")
+          
             return cell
         }
         else

@@ -13,6 +13,7 @@ protocol ProjectViewModelDelegate {
     func didReceiveProjectResponse(response: ProjectResponse?)
 }
 struct ProjectListVM{
+    var latestartreasonVm = latestartReasonVM()
     var delegate : ProjectViewModelDelegate?
     func callProjectListing()
     {
@@ -44,6 +45,7 @@ struct ProjectListVM{
                         ]
                      
                         UserDefaults.standard.set(ProjectListDict, forKey:"ProjectListDict")
+                        latestartreasonVm.calllatestartAPI()
                     }
                         
                     

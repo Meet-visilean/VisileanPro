@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20G165" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AllDataCD" representedClassName="AllDataCD" syncable="YES">
+        <attribute name="activityLocation" optional="YES" attributeType="String"/>
+        <attribute name="activityPriority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="activitySafety" optional="YES" attributeType="String"/>
+        <attribute name="activityTrade" optional="YES" attributeType="String"/>
+        <attribute name="activityType" optional="YES" attributeType="String"/>
+        <attribute name="actorguid" optional="YES" attributeType="String"/>
+        <attribute name="actorname" optional="YES" attributeType="String"/>
+        <attribute name="actororgguid" optional="YES" attributeType="String"/>
+        <attribute name="actororgname" optional="YES" attributeType="String"/>
+        <attribute name="actualEndDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="actualStartDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="allCustomfields" optional="YES" attributeType="String"/>
+        <attribute name="approvedBy" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="baselineEndDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="baselineStartDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="completedPercentage" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="constrainedActivity" optional="YES" attributeType="String"/>
+        <attribute name="constrainingResourceRelations" optional="YES" attributeType="String"/>
+        <attribute name="createdAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="endDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="externalID" optional="YES" attributeType="String"/>
+        <attribute name="guid" optional="YES" attributeType="String"/>
+        <attribute name="hasChildren" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="importID" optional="YES" attributeType="String"/>
+        <attribute name="locationGUID" optional="YES" attributeType="String"/>
+        <attribute name="makeReadyDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="orgName" optional="YES" attributeType="String"/>
+        <attribute name="owner" optional="YES" attributeType="String"/>
+        <attribute name="parentGUID" optional="YES" attributeType="String"/>
+        <attribute name="parentName" optional="YES" attributeType="String"/>
+        <attribute name="projectGuid" optional="YES" attributeType="String"/>
+        <attribute name="rejectedBy" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="rejectedDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="restartDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="resultDescription" optional="YES" attributeType="String"/>
+        <attribute name="showExternalID" optional="YES" attributeType="String"/>
+        <attribute name="startDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stoppedDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="trackingQuantityCurrent" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="trackingQuantityEstimate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="trackingUnit" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="warningDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="AllDataCD" positionX="-63" positionY="-18" width="128" height="704"/>
+    </elements>
+</model>
