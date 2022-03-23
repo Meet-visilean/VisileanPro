@@ -12,6 +12,7 @@ protocol resonforlateonstart{
 }
 class startViewController: UIViewController {
     
+    @IBOutlet var plusBTN: UIButton!
     var resonforlateOBJ = ResonForLateViewController()
     var delegate : resonforlateonstart!
     @IBOutlet var submitBTN: UIButton!
@@ -37,6 +38,11 @@ class startViewController: UIViewController {
         closeBTN.layer.cornerRadius = 15
         
         closeBTN.addShadow(offset: CGSize.init(width: 2, height: 3), color: UIColor.black, radius: 3, opacity: 0.35)
+        collectionView.layer.cornerRadius = 20
+        collectionView.layer.borderWidth = 1
+        collectionView.layer.borderColor = UIColor.black.cgColor
+        plusBTN.layer.cornerRadius = 40
+        plusBTN.addShadow(offset: CGSize.init(width: 2, height: 3), color: UIColor.black, radius: 3, opacity: 0.35)
         // Do any additional setup after loading the view.
     }
     
@@ -76,7 +82,7 @@ extension startViewController : UICollectionViewDelegate,UICollectionViewDataSou
         collectionView.reloadData()
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: 200, height: 30)
+        return CGSize(width: 200, height: 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

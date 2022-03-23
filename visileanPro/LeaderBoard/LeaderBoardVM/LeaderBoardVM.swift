@@ -13,41 +13,53 @@ import SwiftyJSON
 import UIKit
 //allcompletedtask
 var skip = 1
-
+let leaderboard = LeaderBoard()
 class LeaderBoardVM{
     
     private let manager: LeaderBoardMAnager = LeaderBoardMAnager()
+    func startLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.showProgressView()}
+    func StopLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.hideProgressView()}
+    
+    var i = 0
+    
     func callallcompletetaskAPI() -> Int
     {
         
-            APImanager.sharedInstance.allcompletedtask(skip :skip ){(result) in
-                switch result{
-                case.success(let json):
-                    let resultArr = responseArrayLeaderboard.init(data: JSON(rawValue: json!) ?? "JSON")
-                    if resultArr.status == 1
+        if(i == 0){
+            startLoader()
+        }
+       
+        
+        APImanager.sharedInstance.allcompletedtask(skip :skip ){(result) in
+            switch result{
+            case.success(let json):
+                let resultArr = responseArrayLeaderboard.init(data: JSON(rawValue: json!) ?? "JSON")
+                if resultArr.status == 1
+                {
+                    if(resultArr.result.count != 0 )
                     {
-                        if(resultArr.result.count != 0 )
-                        {
-                            //add data to CoreDB
-                            self.callallcompletetaskAPI()
-                            self.adddatatoCD(resultArr :resultArr)
-
-                            skip = skip + 1
-                        }
-                        else{
-                            
+                        //add data to CoreDB
+                        self.i = self.i + 1
+                        self.callallcompletetaskAPI()
+                        
+                        self.adddatatoCD(resultArr :resultArr)
+                        
+                        skip = skip + 1
+                    }
+                    else{
+                        self.StopLoader()
+                        
                         //when resultarray is empty END loop
-                            
-                          
-                        }
                         
                     }
-                case.failure(let err):
-                    print(err.localizedDescription)
-                    
+               
                 }
+            case.failure(let err):
+                print(err.localizedDescription)
+                self.StopLoader()
             }
-        return skip
+        }
+                return skip
         
     }
     
@@ -91,27 +103,27 @@ class LeaderBoardVM{
         var totalNo = alldata?.count
         while(totalNo != 0 )
         {
-        if(guidarray.count == 0)
-        {
-            actorarrayDict.updateValue(alldata![i].actorname, forKey:alldata![i].actorguid)
-            guidarray.append(alldata![i].actorguid)
-            namactor.append(alldata![i].actorname)
-        }
-        else
-        {
-            if(guidarray.contains(alldata![i].actorguid)){
-              print("alredy actor exist")
-            }
-            else{
-                guidarray.append(alldata![i].actorguid)
+            if(guidarray.count == 0)
+            {
                 actorarrayDict.updateValue(alldata![i].actorname, forKey:alldata![i].actorguid)
+                guidarray.append(alldata![i].actorguid)
                 namactor.append(alldata![i].actorname)
             }
-        }
+            else
+            {
+                if(guidarray.contains(alldata![i].actorguid)){
+                    print("alredy actor exist")
+                }
+                else{
+                    guidarray.append(alldata![i].actorguid)
+                    actorarrayDict.updateValue(alldata![i].actorname, forKey:alldata![i].actorguid)
+                    namactor.append(alldata![i].actorname)
+                }
+            }
             totalNo = totalNo! - 1
-                i = i + 1
+            i = i + 1
         }
-            return (guidarray,actorarrayDict,namactor)
+        return (guidarray,actorarrayDict,namactor)
     }
     
     //guid and date wise search from coreDB
@@ -120,17 +132,18 @@ class LeaderBoardVM{
     {
         var i = 1
         var dictionary = [String : Int]()
-           //dictionary.updateValue("egf", forKey: 3)
+        //dictionary.updateValue("egf", forKey: 3)
         var temp = arrayOfactor.count - 1
         while(temp != 0)
         {
             let val =  manager.getlast7daydataGUIDwise(byIdentifier:arrayOfactor[i], startdate: startdate, enddate:enddate)
             dictionary.updateValue(val, forKey:arrayOfactor[i])
             i = i + 1
-            temp = temp - 1 
+            temp = temp - 1
             
         }
         return dictionary
     }
     
 }
+

@@ -13,11 +13,13 @@ protocol LoginViewModelDelegate {
     func didReceiveLoginResponse(loginResponse: LoginResponse?)
 }
 struct LoginViewVM  {
-
+    func startLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.showProgressView()}
+    func StopLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.hideProgressView()}
     var delegate : LoginViewModelDelegate?
     
     func loginUser(loginRequest: LoginRequest)
     {
+        startLoader()
         let validationResult = LoginValidation().checkValidation(loginrequest: loginRequest)
         if(validationResult.result == true)
         {
@@ -32,16 +34,17 @@ struct LoginViewVM  {
                     print(userGUIDFromResponse)
                     DispatchQueue.main.async {
                         self.delegate?.didReceiveLoginResponse(loginResponse: LoginResponse(errorMessage: nil,data: .init(username: usernameFromResponse, password: "")))
+                        StopLoader()
                     }
                 case.failure(let err):
                     print(err.localizedDescription)
-                   
+                   StopLoader()
                 }
             }
         }
         else{
             self.delegate?.didReceiveLoginResponse(loginResponse: LoginResponse(errorMessage: validationResult.message, data: nil))
-            
+            StopLoader()
         }
         
     }

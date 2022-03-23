@@ -12,7 +12,7 @@ class DRPcollectionViewCell: UICollectionViewCell {
     @IBOutlet var mainView: UIView!
     
 
- 
+  
     @IBOutlet var TaskCountdrpLBL: UILabel!
     @IBOutlet var DetailLBL: UILabel!
     

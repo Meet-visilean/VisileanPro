@@ -11,6 +11,7 @@ import SideMenu
 class dashBoard: UIViewController {
     
     
+  
     @IBOutlet var DPRcollectionView: UICollectionView!
     @IBOutlet var navBar: UINavigationBar!
     @IBOutlet var DashboardView: UIView!
@@ -29,6 +30,9 @@ class dashBoard: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        //UIApplication.shared.keyWindow?
+       // let spinner = showLoader(view: self.view)
+        //ActivityIndicatorWithLabel.shared.showProgressView(uiView: self.view)
         startdate = Int((datePicker.date.millisecondsSince1970) - 86400000)
         enddate = startdate + 86400000
         DPRcollectionView.dataSource = self
@@ -36,28 +40,30 @@ class dashBoard: UIViewController {
         setupNavigationBar(navBar: navBar)
         DashboardView.layer.cornerRadius = 40
         
+        datePicker.center = view.center
+        
         DashboardView.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner)
         DashboardView.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
         ProjectList.delegate = self
         
         //MARK: -  Api call
+       
         if(tasklistmanager.fetchTask()?.count == 0)
         {
             ProjectList.callProjectListing()
             let Tasklist = TaskListVM()
             Tasklist.callTaskListApi()			
         }
- 
-        
-        
+
+     
         //LeaderBoard Adddata to CoreData
         let leaderboard = LeaderBoardVM()
-        var CDalltask =  alltaskmanager.fetchTask()
+        let CDalltask =  alltaskmanager.fetchTask()
         if(CDalltask?.count == 0){
             leaderboard.callallcompletetaskAPI()
          
         }
-       
+      
       
         
         print("--------------------- CORE DB FILE ------------------------")
@@ -65,7 +71,7 @@ class dashBoard: UIViewController {
         debugPrint(path[0])
      
         DPRcollectionView.reloadData()
-      
+        
         
     }
    
@@ -118,43 +124,49 @@ extension dashBoard : UICollectionViewDelegate,UICollectionViewDataSource{
             let result = count4 + count5
             
             cell.TaskCountdrpLBL.text = String(describing: result)
-            cell.TaskCountdrpLBL.textColor =  StatusToTaskstatusName(Status: 4).1
-            cell.DetailLBL.textColor =  StatusToTaskstatusName(Status: 4).1
+            cell.TaskCountdrpLBL.textColor = UIColor(red: 37/255, green: 41/255, blue: 88/255, alpha: 1)
+         
+            cell.DetailLBL.textColor = UIColor(red: 37/255, green: 41/255, blue: 88/255, alpha: 1)
         }
         else if(indexPath.row == 1)
         {
             let result = dprmanager.getDprData(status: 7,startdate: startdate,enddate: enddate )
+   
             cell.TaskCountdrpLBL.text = String(describing: result)
-            cell.TaskCountdrpLBL.textColor =  StatusToTaskstatusName(Status: 7).1
-            cell.DetailLBL.textColor =  StatusToTaskstatusName(Status: 7).1
+            cell.TaskCountdrpLBL.textColor =  UIColor(red: 9/255, green: 129/255, blue: 1/255, alpha: 255/255)
+            cell.DetailLBL.textColor = UIColor(red: 9/255, green: 129/255, blue: 1/255, alpha: 255/255)
         }
         else if(indexPath.row == 2)
         {
             let result = dprmanager.getDprData(status: 9 ,startdate: startdate,enddate: enddate)
             cell.TaskCountdrpLBL.text = String(describing: result)
-            cell.TaskCountdrpLBL.textColor =  StatusToTaskstatusName(Status: 7).1
-            cell.DetailLBL.textColor =  StatusToTaskstatusName(Status: 7).1
+            cell.TaskCountdrpLBL.textColor = UIColor(red: 15/255, green: 110/255, blue: 152/255, alpha: 255/255)
+         
+            cell.DetailLBL.textColor = UIColor(red: 15/255, green: 110/255, blue: 152/255, alpha: 255/255)
         }
         else if(indexPath.row == 3)
         {
             let result = dprmanager.getDprData(status: 8 ,startdate: startdate,enddate: enddate)
             cell.TaskCountdrpLBL.text = String(describing: result)
-            cell.TaskCountdrpLBL.textColor =  StatusToTaskstatusName(Status: 8).1
-            cell.DetailLBL.textColor =  StatusToTaskstatusName(Status: 8).1
+            cell.TaskCountdrpLBL.textColor =  UIColor(red: 91/255, green: 85/255, blue: 181/255, alpha: 255/255)
+      
+            cell.DetailLBL.textColor =   UIColor(red: 91/255, green: 85/255, blue: 181/255, alpha: 255/255)
         }
         else if(indexPath.row == 4)
         {
-            let result = dprmanager.getDprData(status: 5 ,startdate: startdate,enddate: enddate)
+            let result = dprmanager.getDprData(status: 6 ,startdate: startdate,enddate: enddate)
             cell.TaskCountdrpLBL.text = String(describing: result)
-            cell.TaskCountdrpLBL.textColor =  StatusToTaskstatusName(Status: 5).1
-            cell.DetailLBL.textColor =  StatusToTaskstatusName(Status: 5).1
+            cell.TaskCountdrpLBL.textColor =  UIColor(red: 253/255, green: 8/255, blue: 7/255, alpha: 255/255)
+           
+            cell.DetailLBL.textColor = UIColor(red: 253/255, green: 8/255, blue: 7/255, alpha: 255/255)
         }
         else if(indexPath.row == 5)
         {
-            let result = dprmanager.getDprData(status: 6 ,startdate: startdate,enddate: enddate)
+            let result = dprmanager.getDprData(status: 5 ,startdate: startdate,enddate: enddate)
             cell.TaskCountdrpLBL.text = String(describing: result)
-            cell.TaskCountdrpLBL.textColor =  StatusToTaskstatusName(Status: 6).1
-            cell.DetailLBL.textColor =  StatusToTaskstatusName(Status: 6).1
+            cell.TaskCountdrpLBL.textColor =  UIColor(red: 187/255, green: 132/255, blue: 49/255, alpha: 255/255)
+          
+            cell.DetailLBL.textColor =  UIColor(red: 187/255, green: 132/255, blue: 49/255, alpha: 255/255)
         }
         return cell
         
@@ -162,3 +174,5 @@ extension dashBoard : UICollectionViewDelegate,UICollectionViewDataSource{
     
     
 }
+
+

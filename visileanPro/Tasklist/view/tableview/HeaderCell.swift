@@ -11,6 +11,7 @@ class HeaderCell: UICollectionViewCell {
     
     @IBOutlet var HeaderLBL: UILabel!
     
+    @IBOutlet var SepratorView: UIView!
     override  func awakeFromNib() {
             super.awakeFromNib()
 

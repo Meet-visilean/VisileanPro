@@ -25,7 +25,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
     private let manager = TaskListManager()
     @IBOutlet var HeaderCollectionView: UICollectionView!
     @IBOutlet var collectionViewMain: UICollectionView!
-  
+    
     var colectiondataa = CollectionViewCell()
     @IBOutlet var mainView: UIView!
     override func viewDidLoad() {
@@ -53,6 +53,17 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
         collectionViewMain.scrollToItem(at:IndexPath(item: SelectedIndex, section: 0), at: .right, animated: true)
         collectionViewMain.reloadData()
         HeaderCollectionView.reloadData()
+        
+    }
+    
+    @IBAction func refreshBTNclick(_ sender: Any) {
+        
+     
+            let Tasklist = TaskListVM()
+            Tasklist.callTaskListApi()
+        let ProjectList = ProjectListVM()
+        ProjectList.callProjectListing()    
+            
         
     }
     
@@ -169,15 +180,21 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
             }
             
             //MARK :- color change
-            headerCell.HeaderLBL.textColor = .black
+            headerCell.HeaderLBL.textColor = .gray
+            headerCell.HeaderLBL.font = UIFont(name:"System", size: 17.0)
+            headerCell.SepratorView.backgroundColor = .white
             
             if SelectedIndex == indexPath.row
             {
-                headerCell.HeaderLBL.textColor = .red
+                headerCell.HeaderLBL.textColor = .black
+                headerCell.HeaderLBL.font = UIFont(name:"HelveticaNeue-Bold", size: 17.0)
+                headerCell.SepratorView.backgroundColor = .red
             }
             else
             {
-                headerCell.HeaderLBL.textColor = .black
+                headerCell.HeaderLBL.textColor = .gray
+                headerCell.HeaderLBL.font = UIFont(name:"System", size: 17.0)
+                headerCell.SepratorView.backgroundColor = .white
             }
 
             return headerCell

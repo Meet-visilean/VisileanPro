@@ -15,7 +15,7 @@ class CollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableViewDa
     let cellReuseIdentifier = "cell"
     var TitleOfTableview : String = " "
     // var task
-    
+
     var collectionIndex = 0
     @IBOutlet var tableView: UITableView!
     
@@ -118,6 +118,16 @@ class CollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableViewDa
         cell.NameLBL.text = obj.name
         let dateFormatter = DateFormatter()
         cell.locationLBL.text = obj.activityLocation
+        if(cell.locationLBL.text != "")
+        {
+            cell.locationIMG.image = UIImage(named: "location")
+
+        }
+       
+     
+   
+     
+        
         dateFormatter.dateFormat = "dd MMM "
         let startdate = dateFormatter.string(from: Date(milliseconds: obj.startDate ))
         cell.startDataLBL.text = startdate

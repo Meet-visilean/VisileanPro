@@ -15,7 +15,10 @@ class LeaderboardCollectionViewCell: UICollectionViewCell {
     
     func changecolor()
     {
-        sepratorView.backgroundColor = .darkGray
+        sepratorView.backgroundColor = .white
+        NameCollLBL.textColor = .black
+        NameCollLBL.font = UIFont(name:"system", size: 17.0)
+        
 
     }
 }

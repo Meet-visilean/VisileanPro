@@ -11,7 +11,55 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     static let navigate = SceneDelegate()
     var window: UIWindow?
+    
+     
+    public class ActivityIndicatorWithLabel {
+        var view = UIView()
+        var progressView = UIView()
+     public class var shared: ActivityIndicatorWithLabel {
+         struct Static {
+             static let instance: ActivityIndicatorWithLabel = ActivityIndicatorWithLabel()
+         }
+         return Static.instance
+     }
+     
+     var pinchImageView = UIImageView()
+     
+     public func showProgressView() {
+          view = UIView(frame: UIScreen.main.bounds)
 
+         view.backgroundColor = UIColorFromHex(rgbValue: 0xffffff, alpha: 0.7)
+         let imageData = NSData(contentsOf: Bundle.main.url(forResource: "loader", withExtension: "gif")!)
+         let animatedImage = UIImage.gifImageWithName("loader")
+          pinchImageView = UIImageView(image: animatedImage)
+         pinchImageView.clipsToBounds = true
+         pinchImageView.frame = CGRect(x: 0.0, y: 0.0, width: 130.0, height: 120.0)
+        pinchImageView.center = view.center
+
+         view.addSubview(pinchImageView)
+         UIApplication.shared.keyWindow?.addSubview(view)
+         UIApplication.shared.beginIgnoringInteractionEvents()
+
+     }
+     
+     public func hideProgressView() {
+         pinchImageView.removeFromSuperview()
+         progressView.removeFromSuperview()
+         view.removeFromSuperview()
+         UIApplication.shared.endIgnoringInteractionEvents()
+     }
+     
+     public func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
+         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+         let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+         let blue = CGFloat(rgbValue & 0xFF)/256.0
+         return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
+     }
+        
+      
+        
+    }
+    
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         

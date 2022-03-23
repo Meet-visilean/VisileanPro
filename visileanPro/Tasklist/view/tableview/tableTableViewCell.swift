@@ -15,9 +15,10 @@ class tableTableViewCell: UITableViewCell{
     @IBOutlet var NameLBL: UILabel!
     @IBOutlet var StatusOftaskLBL: UILabel!
     @IBOutlet var locationLBL: UILabel!
-    
+    @IBOutlet var locationIMG: UIImageView!
     @IBOutlet var statusBTN: UIButton!
     
+    @IBOutlet var EmptyLBL: UILabel!
     
     override func awakeFromNib() {
 

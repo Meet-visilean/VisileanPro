@@ -12,13 +12,13 @@ class TaskDetail: UIViewController {
     
     var taskdata : TaskListResult?
    
+    @IBOutlet var TaskNameBTN: UIButton!
     
-    @IBOutlet var TaskNameLBL: UILabel!
+ 
     @IBOutlet var userBL: UILabel!
     var relodeCollectionView : relodeCollectionViewPC!
     @IBOutlet var orgnameLBL: UILabel!
-    @IBOutlet var stopeBTn: UIButton!
-    @IBOutlet var startBTN: UIButton!
+
     @IBOutlet var DateStatusLBL: UILabel!
     @IBOutlet var DateofTaskLBL: UILabel!
     @IBOutlet var planneddateLBL: UILabel!
@@ -51,8 +51,8 @@ class TaskDetail: UIViewController {
     func UIchange(taskdata : TaskListResult)
     {
         
-        
-        TaskNameLBL.text = taskdata.name
+        TaskNameBTN.setTitle("< \(taskdata.name)", for: .normal)
+      
         LocationLBL.text = taskdata.activityLocation
         orgnameLBL.text = taskdata.orgName
     
@@ -84,11 +84,7 @@ class TaskDetail: UIViewController {
         PriorityBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
         
         
-        startBTN.layer.cornerRadius = 15
-        startBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
-        
-        stopeBTn.layer.cornerRadius = 15
-        stopeBTn.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
+//
     }
     
     @IBAction func StatusBTNclick(_ sender: Any) {
@@ -116,15 +112,7 @@ class TaskDetail: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
-    @IBAction func startBTNtapped(_ sender: Any) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "startViewController") as! startViewController
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    @IBAction func stopedBTNtapped(_ sender: Any) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "Loader") as! Loader
-        self.present(vc, animated: true, completion: nil)
-    }
+
 }
 extension TaskDetail : changeTaskdetailUI{
     func changeUI(taskdata: TaskListResult) {

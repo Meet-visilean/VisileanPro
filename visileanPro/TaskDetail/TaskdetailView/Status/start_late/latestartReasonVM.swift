@@ -12,8 +12,15 @@ import UIKit
 
 struct latestartReasonVM{
     private let manager: latestartmanager = latestartmanager()
+    func startLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.showProgressView()
+        print("latereasonstartLoader")
+    }
+    func StopLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.hideProgressView()
+        print("latereasonEndLoader")
+    }
     func calllatestartAPI()
     {
+        startLoader()
         let projctdata = UserDefaults.standard.dictionary(forKey: "ProjectListDict")
         //nil because project API not called
         let projectGUID = projctdata!["guid"] as! String
@@ -49,12 +56,13 @@ struct latestartReasonVM{
                         temp = temp - 1
                         i = i + 1
                     }
+                    StopLoader()
                 }
             
                 
             case.failure(let err):
                 print(err.localizedDescription)
-              
+              StopLoader()
                 
                 
             }

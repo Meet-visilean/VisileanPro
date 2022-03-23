@@ -11,11 +11,19 @@ import SwiftyJSON
 
 struct TaskListVM{
     //  var delegate : ProjectViewModelDelegate?
-    
+    func startLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.showProgressView()
+        print("taskListStratLoader")
+    }
+    func StopLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.hideProgressView()
+        print("TAsklistStopLoader")
+    }
     private let manager: TaskListManager = TaskListManager()
     
     func callTaskListApi()
     {
+        startLoader()
+      
+       
         var _ : [TaskListResult]? = nil
         let startDate = ((Int(Date().millisecondsSince1970)) - 2629800000)
         
@@ -54,10 +62,12 @@ struct TaskListVM{
                         temp = temp - 1
                         i = i + 1
                     }
+                    StopLoader()
+                    
                 }
             case.failure(let err):
                 print(err.localizedDescription)
-                
+                StopLoader()
             }
             
         }

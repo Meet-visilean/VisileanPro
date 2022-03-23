@@ -50,7 +50,7 @@ class LeaderBoard: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
         setupNavigationBar(navBar: navBar)
         mainView.layer.cornerRadius = 40
         tableView.delegate = self
@@ -78,9 +78,7 @@ class LeaderBoard: UIViewController {
         firstnoView.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner,.layerMinXMinYCorner)
       
         SuperView.backgroundColor = upperView.backgroundColor
-        
-        
-     
+
         
         //find all actorguid List and store in array
         arrayOfactor = LeaderboardVm.findallactorList().0
@@ -94,7 +92,7 @@ class LeaderBoard: UIViewController {
       
         
        allTimeWinnnerData()
-        
+       
     }
     
     @IBAction func btnClickMenu(_ sender: Any) {
@@ -102,6 +100,14 @@ class LeaderBoard: UIViewController {
         menu.leftSide=true
         present(menu, animated: true, completion: nil)
     }
+    
+    @IBAction func refreshBTNclick(_ sender: Any) {
+
+        let leaderboard = LeaderBoardVM()
+        leaderboard.callallcompletetaskAPI()
+    
+    }
+    
     func filldata(name:[String],Score:[String])
     {
          
@@ -234,12 +240,14 @@ extension LeaderBoard : UICollectionViewDelegate,UICollectionViewDataSource{
         if SelectedIndex == indexPath.row
         {
             cell.NameCollLBL.textColor = .black
+            cell.NameCollLBL.font = UIFont(name:"HelveticaNeue-Bold", size: 17.0)
             cell.sepratorView.backgroundColor = .red
         }
         else
         {
-            cell.NameCollLBL.textColor = .systemGray2
-            cell.sepratorView.backgroundColor = .systemGray2
+            cell.NameCollLBL.textColor = .black
+            cell.NameCollLBL.font = UIFont(name:"system", size: 17.0)
+            cell.sepratorView.backgroundColor = .white
         }
         return cell
     }

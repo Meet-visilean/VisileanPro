@@ -63,14 +63,11 @@ class ResonForLateViewController: UIViewController {
         print(reasonsSend)
         print(indx)
         if selectedRows.contains(indxPath!) {
-            
             if((indxPath!.row) != 0){
                 let index = reasonsSend.firstIndex(of: lateresons![indxPath!.row].customReasonName)
                 reasonsSend.remove(at: index!)
-                
             }
-            
-            
+
             selectedRows.remove(at: selectedRows.firstIndex(of: indxPath!) ?? 0)
         } else {
             print(reasons[indx])

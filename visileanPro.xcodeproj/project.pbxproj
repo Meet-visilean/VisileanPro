@@ -432,7 +432,6 @@
 			children = (
 				C3983C9A27C4B245009811D2 /* CollectionView */,
 				C396340C27BFBFF400BF72DE /* tableview */,
-				C396340427BFA25600BF72DE /* TaskCollection.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -712,6 +711,7 @@
 		C3C11CE127BA8F5F009B386C /* Tasklist */ = {
 			isa = PBXGroup;
 			children = (
+				C396340427BFA25600BF72DE /* TaskCollection.swift */,
 				C38640F827C8BA2E003EC13B /* model */,
 				C333C2C027CF992700826FA1 /* CoreData_TaskList */,
 				C38640F927C8BA36003EC13B /* ModelView */,

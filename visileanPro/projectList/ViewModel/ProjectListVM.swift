@@ -13,10 +13,18 @@ protocol ProjectViewModelDelegate {
     func didReceiveProjectResponse(response: ProjectResponse?)
 }
 struct ProjectListVM{
+    func startLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.showProgressView()
+        print("ProjectLiastStartLoader")
+    }
+    func StopLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.hideProgressView()
+        print("ProjectLiastEndLoader")
+    }
+    
     var latestartreasonVm = latestartReasonVM()
     var delegate : ProjectViewModelDelegate?
     func callProjectListing()
     {
+        //startLoader()
         let model = projectListRequestModel.init(actorGUID: UserDefaults.standard.object(forKey: "userGUIDUserDefault") as? String ?? "")
         APImanager.sharedInstance.callProjectListApi(param: model){(result) in
             switch result{
@@ -50,16 +58,20 @@ struct ProjectListVM{
                         
                     
                     DispatchQueue.main.async {
+                        
                         self.delegate?.didReceiveProjectResponse(response:ProjectResponse(status: 1, message: ""))
                     }
+                    StopLoader()
                 }
             case.failure(let err):
                 print(err.localizedDescription)
                 self.delegate?.didReceiveProjectResponse(response:ProjectResponse(status: 0, message: "error"))
-                
+                StopLoader()
+          
                 
             }
             
         }
+       
     }
 }
