@@ -153,6 +153,7 @@ class statusViewController: UIViewController {
             {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "startViewController") as! startViewController
             vc.delegate = self
+                
             self.present(vc, animated: true, completion: nil)
                 
             }
@@ -161,8 +162,10 @@ class statusViewController: UIViewController {
                
                 let updatedTask =  manager.gettaskdetaibyguid(guid: taskdetail!.guid)
                 dprmanager.createDPR(DPRmodel: updatedTask!, acurrentdate: currentdate,latestartreason: reasonsForlate)
+                
+                //manager.createTask(TaskListresult: TaskListOBJ, responsibleactor: resOBJ)
                 self.dismiss(animated: true, completion: nil)
-
+                
                 delegate.changeUI(taskdata: updatedTask!)
             }
           

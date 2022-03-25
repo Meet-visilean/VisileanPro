@@ -37,13 +37,11 @@ class LeaderBoard: UIViewController {
     var enddate  = Date().millisecondsSince1970
     
     //1
-    
-    @IBOutlet var Lead1Name: UILabel!
+   @IBOutlet var Lead1Name: UILabel!
     @IBOutlet var Lead1Score: UILabel!
     //2
     @IBOutlet var Lead2name: UILabel!
-    @IBOutlet var lead2Score: UILabel!
-    
+    @IBOutlet var lead2Score: UILabel!    
     //3
     @IBOutlet var lead3Name: UILabel!
     @IBOutlet var lead3Score: UILabel!
@@ -93,6 +91,34 @@ class LeaderBoard: UIViewController {
         
        allTimeWinnnerData()
        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        animateTable()
+    }
+        
+  
+    func animateTable() {
+        tableView.reloadData()
+            
+        let cells = tableView.visibleCells
+        let tableHeight: CGFloat = tableView.bounds.size.height
+            
+        for i in cells {
+            let cell: UITableViewCell = i as UITableViewCell
+            cell.transform = CGAffineTransform(translationX: 0, y: tableHeight)
+        }
+            
+        var index = 0
+            
+        for a in cells {
+            let cell: UITableViewCell = a as UITableViewCell
+            UIView.animate(withDuration: 1.0, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, animations: {
+                cell.transform = CGAffineTransform(translationX: 0, y: 0);
+            }, completion: nil)
+                
+            index += 1
+        }
     }
     
     @IBAction func btnClickMenu(_ sender: Any) {
@@ -262,20 +288,25 @@ extension LeaderBoard : UICollectionViewDelegate,UICollectionViewDataSource{
             allTimeWinnnerData()
             collectionView.reloadData()
             tableView.reloadData()
+            animateTable()
         }
         else if(indexPath.row == 1)
         {
+           
             SelectedIndex = indexPath.row
             WeeklyWinnerData()
             collectionView.reloadData()
             tableView.reloadData()
+            animateTable()
         }
         else if(indexPath.row == 2)
         {
+           
             SelectedIndex = indexPath.row
             monthlyWinner()
             collectionView.reloadData()
             tableView.reloadData()
+            animateTable()
         }
         
     }
@@ -296,7 +327,13 @@ extension LeaderBoard : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeaderboardTableViewCell") as! LeaderboardTableViewCell
         cell.count.text = indx[indexPath.row]
-    
+        if(indexPath.row == 0){
+            cell.trophyIMG.isHidden = false
+            cell.trophyIMG.image = UIImage(named: "Trophhy")
+        }
+        else{
+            cell.trophyIMG.isHidden = true
+        }
         var name = dictofactor[nameArray[indexPath.row]]
         if(name == "")
         {

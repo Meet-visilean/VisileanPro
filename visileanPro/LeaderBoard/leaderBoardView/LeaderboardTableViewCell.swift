@@ -9,6 +9,7 @@ import UIKit
 
 class LeaderboardTableViewCell: UITableViewCell {
 
+    @IBOutlet var trophyIMG: UIImageView!
     @IBOutlet var tasklTypeLBL: UILabel!
     @IBOutlet var ScoreLBL: UILabel!
     @IBOutlet var NameLBL: UILabel!

@@ -20,6 +20,7 @@ class dashBoard: UIViewController {
     private let alltaskmanager = LeaderBoardMAnager()
     var startdate : Int = 1
     var enddate : Int = 0
+    var  CDalltask : [TaskListResultALL]? = nil
     var TaskStatusDetail : [String] = ["All Task In Progress","Tasks Completed","Task Quality Approved ","Tasks Marked For Rework","Tasks Stopped","Alert Raised"]
     
     @IBOutlet var datePicker: UIDatePicker!
@@ -30,10 +31,8 @@ class dashBoard: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        //UIApplication.shared.keyWindow?
-       // let spinner = showLoader(view: self.view)
-        //ActivityIndicatorWithLabel.shared.showProgressView(uiView: self.view)
-        startdate = Int((datePicker.date.millisecondsSince1970) - 86400000)
+    
+        startdate = (Int(Date().millisecondsSince1970) - 86400000)
         enddate = startdate + 86400000
         DPRcollectionView.dataSource = self
         DPRcollectionView.delegate = self
@@ -44,6 +43,7 @@ class dashBoard: UIViewController {
         
         DashboardView.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner)
         DashboardView.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
+        
         ProjectList.delegate = self
         
         //MARK: -  Api call
@@ -58,7 +58,8 @@ class dashBoard: UIViewController {
      
         //LeaderBoard Adddata to CoreData
         let leaderboard = LeaderBoardVM()
-        let CDalltask =  alltaskmanager.fetchTask()
+       CDalltask =  alltaskmanager.fetchTask()
+        
         if(CDalltask?.count == 0){
             leaderboard.callallcompletetaskAPI()
          
@@ -78,6 +79,13 @@ class dashBoard: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         DPRcollectionView.reloadData()
       }
+    override func viewWillAppear(_ animated: Bool) {
+        CDalltask =  alltaskmanager.fetchTask()
+        startdate = (Int(Date().millisecondsSince1970) - 86400000)
+        enddate = startdate + 86400000
+        DPRcollectionView.reloadData()
+      }
+
 
     @IBAction func btnClickMenu(_ sender: Any) {
         let menu = SideMenuNavigationController(rootViewController: SideMenu())
@@ -89,7 +97,7 @@ class dashBoard: UIViewController {
 
         //-------------change logic-----
         let date = datePicker.date
-        startdate = Int((date.millisecondsSince1970))
+       // startdate = Int((date.millisecondsSince1970))
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yy"
         let startdatee = dateFormatter.string(from: date)

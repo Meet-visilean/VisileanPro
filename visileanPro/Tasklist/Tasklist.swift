@@ -48,7 +48,8 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
         collectionViewMain.layer.cornerRadius = 40
         collectionViewMain.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner)
         
-      
+    
+        
         self.SelectedIndex = 0
         collectionViewMain.scrollToItem(at:IndexPath(item: SelectedIndex, section: 0), at: .right, animated: true)
         collectionViewMain.reloadData()

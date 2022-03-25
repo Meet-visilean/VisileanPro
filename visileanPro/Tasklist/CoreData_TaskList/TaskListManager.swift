@@ -27,6 +27,9 @@ struct TaskListManager{
     func updateTaskStauts(taskListResult: TaskListResult) -> Bool {
         return _TaskListDataRepo.updateStatusCode(taskListResult: taskListResult)
     }
+    func updateTaskActivityType(taskListResult: TaskListResult) -> Bool {
+        return _TaskListDataRepo.updateTaskType(taskListResult: taskListResult)
+    }
    func gettaskdetaibyguid(guid : String)-> TaskListResult?
     {
         return _TaskListDataRepo.get(byIdentifier: guid)

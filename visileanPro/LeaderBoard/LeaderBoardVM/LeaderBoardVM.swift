@@ -17,8 +17,12 @@ let leaderboard = LeaderBoard()
 class LeaderBoardVM{
     
     private let manager: LeaderBoardMAnager = LeaderBoardMAnager()
-    func startLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.showProgressView()}
-    func StopLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.hideProgressView()}
+    func startLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.showProgressView()
+        print("StartLoader-LeaderBoard")
+    }
+    func StopLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.hideProgressView()
+        print("stoploader-LeaderBoard")
+    }
     
     var i = 0
     
@@ -46,9 +50,9 @@ class LeaderBoardVM{
                         
                         skip = skip + 1
                     }
-                    else{
+                    else if(resultArr.result.count == 0){
                         self.StopLoader()
-                        
+                     
                         //when resultarray is empty END loop
                         
                     }

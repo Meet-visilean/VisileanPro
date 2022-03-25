@@ -21,10 +21,12 @@ class TaskDetail: UIViewController {
 
     @IBOutlet var DateStatusLBL: UILabel!
     @IBOutlet var DateofTaskLBL: UILabel!
-    @IBOutlet var planneddateLBL: UILabel!
+   
     @IBOutlet var LocationLBL: UILabel!
     @IBOutlet var QuantitiesLBL: UILabel!
+    @IBOutlet var PlannedEndDateLBL: UILabel!
     var quantitiy : Int = 0
+    @IBOutlet var PlannedStartDateLBL: UILabel!
     @IBOutlet var statusBTN: UIButton!
     var selectedTaskguid : String = ""
     @IBOutlet var constructionBTN: UIButton!
@@ -54,6 +56,10 @@ class TaskDetail: UIViewController {
         TaskNameBTN.setTitle("< \(taskdata.name)", for: .normal)
       
         LocationLBL.text = taskdata.activityLocation
+        if(LocationLBL.text == "")
+        {
+            LocationLBL.text = "LOC"
+        }
         orgnameLBL.text = taskdata.orgName
     
         quantitiy = taskdata.trackingQuantityEstimate ?? 0
@@ -62,10 +68,13 @@ class TaskDetail: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         let startdate = dateFormatter.string(from: Date(milliseconds: taskdata.startDate ?? 0))
+        let EndDate = dateFormatter.string(from: Date(milliseconds: Int64(taskdata.endDate )))
+        PlannedStartDateLBL.text =  startdate
+        PlannedEndDateLBL.text =   EndDate
         DateofTaskLBL.text = startdate
         //create function for name of status
         let statusOftask = ( StatusToTaskstatusName(Status: taskdata.status))
-      
+        constructionBTN.setTitle(taskdata.activityType, for: .normal)
         statusBTN.setTitle(statusOftask.0, for:.normal)
         //startBTN.backgroundColor = statusOftask.1
        
@@ -104,6 +113,8 @@ class TaskDetail: UIViewController {
     }
     @IBAction func TaskTypeBTN(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "TaskType") as! TaskType
+        vc.TaskDetailData = taskdata
+        vc.delegate = self
         self.present(vc, animated: true, completion: nil)
     }
     

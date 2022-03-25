@@ -96,7 +96,6 @@ extension ResonForLateViewController:UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "reasonsTableViewCell",for: indexPath as IndexPath) as? reasonsTableViewCell
         cell?.resonNameLBL.text = reasons[indexPath.row]
         selectedreason = reasons[indexPath.row]
-        cell?.radioBTN.addTarget(self, action: #selector(checkboxClicked(_ :)), for: .touchUpInside)
         cell?.radioBTN.isSelected = false
         if selectedRows.contains(indexPath) {
             cell?.radioBTN.isSelected = true
@@ -106,4 +105,29 @@ extension ResonForLateViewController:UITableViewDelegate,UITableViewDataSource{
     }
     
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reasonsTableViewCell",for: indexPath as IndexPath) as? reasonsTableViewCell
+       
+    //    cell?.radioBTN.addTarget(self, action: #selector(checkboxClicked(_ :)), for: .touchUpInside)
+       
+        
+        let indx = (indexPath.row)
+       
+        print(indx)
+        if selectedRows.contains(indexPath) {
+         
+                let index = reasonsSend.firstIndex(of: lateresons![indexPath.row].customReasonName)
+                reasonsSend.remove(at: index!)
+            
+
+            selectedRows.remove(at: selectedRows.firstIndex(of: indexPath) ?? 0)
+        } else {
+           
+            reasonsSend.append(reasons[indx])
+            selectedRows.append(indexPath)
+        }
+        print(reasonsSend)
+        // tableView.reloadData()
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
 }

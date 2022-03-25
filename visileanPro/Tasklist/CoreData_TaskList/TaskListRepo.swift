@@ -88,7 +88,16 @@ struct TaskListDataRepo : TaskListRepo{
         PersistentStorage.shared.saveContext()
         return true
     }
+    func updateTaskType(taskListResult: TaskListResult) -> Bool {
 
+        let cdtaskdetail = getTaskDetails(byIdentifier: taskListResult.guid)
+        guard cdtaskdetail != nil else {return false}
+        
+        cdtaskdetail?.activityType = taskListResult.activityType
+       
+        PersistentStorage.shared.saveContext()
+        return true
+    }
     func getTaskDetails(byIdentifier guid: String) -> TaskListCD?
    {
        let fetchRequest = NSFetchRequest<TaskListCD>(entityName: "TaskListCD")

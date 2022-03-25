@@ -54,7 +54,7 @@ struct TaskListResult {
     let constrainingResourceRelations: String
     let constrainedActivity: String
     let owner: String
-    let activityType: String
+    var activityType: String
     let orgName: String
     let parentName: String
     let activityTrade: String

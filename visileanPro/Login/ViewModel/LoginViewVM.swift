@@ -13,8 +13,12 @@ protocol LoginViewModelDelegate {
     func didReceiveLoginResponse(loginResponse: LoginResponse?)
 }
 struct LoginViewVM  {
-    func startLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.showProgressView()}
-    func StopLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.hideProgressView()}
+    func startLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.showProgressView()
+        print("loginloader")
+    }
+    func StopLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.hideProgressView()
+        print("Endloginloader")
+    }
     var delegate : LoginViewModelDelegate?
     
     func loginUser(loginRequest: LoginRequest)

@@ -273,7 +273,7 @@ extension APImanager{
                         print(userGUIDFromResponse)
                         DispatchQueue.main.async {
                             UserDefaults.standard.set(true,forKey: "Login")
-                            Globe.shared.setTabbarRoot()
+                           
                         }
                     case.failure(let err):
                         print(err.localizedDescription)
