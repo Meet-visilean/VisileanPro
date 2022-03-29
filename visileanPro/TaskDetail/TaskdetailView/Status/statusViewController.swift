@@ -146,12 +146,29 @@ class statusViewController: UIViewController {
         else
             {resonpageshow7 = false}
         
-        
+    //    4-start,5-warning,6-stoped,7=complete,
         if((selectedBTNcode == 4 && resonpageshow4 == true) || (selectedBTNcode == 7 && resonpageshow7 == true) || selectedBTNcode == 5 || selectedBTNcode == 6 )
         {
             if(reasonsForlate.count == 0)
             {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "startViewController") as! startViewController
+                if(selectedBTNcode == 5)
+                {
+                    vc.title1 = "Alert Task"
+                    vc.title2 = "Reasons For Alert"
+                }
+                else if(selectedBTNcode == 4){  
+                    vc.title1 = "start Late Reason"
+                    vc.title2 = "Reasons For Lateness"
+                }
+                else if(selectedBTNcode == 6){
+                    vc.title1 = "Stop Task"
+                    vc.title2 = "Reasons For Stop"
+                }
+                else if(selectedBTNcode == 7){
+                    vc.title1 = "Late Complete Reason"
+                    vc.title2 = "Reasons For Late Complete"
+                }
             vc.delegate = self
                 
             self.present(vc, animated: true, completion: nil)

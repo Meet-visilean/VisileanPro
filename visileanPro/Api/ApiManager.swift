@@ -286,5 +286,44 @@ extension APImanager{
     
     }
     
+    //MARK :- Google drive
     
+    func Gdrive(completionHandler :@escaping Handler ){
+   // https://www.googleapis.com/drive/v3
+        let latestartUrl =  "https://www.googleapis.com/drive/v3"
+        
+        AF.request(latestartUrl, method: .get, parameters: Parameters.init(), headers: headers()).response{
+            response in debugPrint(response)
+            self.checkAuthenticationToken(statusCode: response.response!.statusCode as Int)
+            switch response.result{
+            case .success(let data):
+                    
+                do{
+                    let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                    
+                   
+                    if(response.response?.statusCode == 200)
+                    {
+                        completionHandler(.success(json))
+                        //  print(json)
+                    }
+                    else{
+                        completionHandler(.failure(.custom(message: "Please check Network Conn")))
+                    }
+                    
+                }catch let error{
+                    print(error.localizedDescription)
+                    completionHandler(.failure(.custom(message: "please try again")))
+                }
+                
+            case .failure(let err):
+                print(err.localizedDescription)
+                completionHandler(.failure(.custom(message: "please try again")))
+            }
+        }.resume()
+    }
+
+
+
+
 }

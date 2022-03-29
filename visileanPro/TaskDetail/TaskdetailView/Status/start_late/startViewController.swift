@@ -13,11 +13,15 @@ protocol resonforlateonstart{
 class startViewController: UIViewController {
     
     @IBOutlet var plusBTN: UIButton!
+    var title1 : String = "Task Reasons"
+    var title2 : String = "Reasons"
     var resonforlateOBJ = ResonForLateViewController()
+    @IBOutlet var TitleLBL: UILabel!
     var delegate : resonforlateonstart!
     @IBOutlet var submitBTN: UIButton!
     @IBOutlet var closeBTN: UIButton!
     @IBOutlet var mainView: UIView!
+    @IBOutlet var Title2LBL: UILabel!
     @IBOutlet var coleView: UIView!
     @IBOutlet var collectionView: UICollectionView!
     private var selected = [String]()
@@ -43,6 +47,8 @@ class startViewController: UIViewController {
         collectionView.layer.borderColor = UIColor.black.cgColor
         plusBTN.layer.cornerRadius = 40
         plusBTN.addShadow(offset: CGSize.init(width: 2, height: 3), color: UIColor.black, radius: 3, opacity: 0.35)
+        TitleLBL.text = title1
+        Title2LBL.text = title2
         // Do any additional setup after loading the view.
     }
     

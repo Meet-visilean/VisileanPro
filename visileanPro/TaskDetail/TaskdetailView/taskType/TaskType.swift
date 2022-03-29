@@ -29,10 +29,10 @@ class TaskType: UIViewController {
         mainView.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner,.layerMinXMinYCorner)
         mainView.addShadow(offset: CGSize.init(width: 3, height: 3), color: UIColor.black, radius: 5.0, opacity: 0.35)
         submitBNT.layer.cornerRadius = 15
-     
+        
         submitBNT.addShadow(offset: CGSize.init(width: 2, height: 3), color: UIColor.black, radius: 3, opacity: 0.35)
         closeBTN.layer.cornerRadius = 15
-     
+        
         closeBTN.addShadow(offset: CGSize.init(width: 2, height: 3), color: UIColor.black, radius: 3, opacity: 0.35)
         tableview.reloadData()
         
@@ -40,27 +40,27 @@ class TaskType: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         defaultSelect()
-       
+        
     }
     func defaultSelect()
     {
         
         if(updatedTask?.activityType == "DESIGN")
         {
-          
+            
             SelectedIndex = 1
         }
         else if(updatedTask?.activityType == "CONSTRUCTION"){
             SelectedIndex = 0
-          
+            
         }
     }
     @IBAction func closeBTNclick(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func submitBTNclick(_ sender: Any) {
-       
+        
         var taskdetail = TaskDetailData
         if(SelectedIndex == 1)
         {
@@ -68,12 +68,12 @@ class TaskType: UIViewController {
         }
         else if(SelectedIndex == 0)
         {
-           
+            
             taskdetail?.activityType = "CONSTRUCTION"
         }
         
         manager.updateTaskActivityType(taskListResult: taskdetail!)
-         updatedTask =  manager.gettaskdetaibyguid(guid: taskdetail!.guid)
+        updatedTask =  manager.gettaskdetaibyguid(guid: taskdetail!.guid)
         self.dismiss(animated: true, completion: nil)
         delegate.changeUI(taskdata: updatedTask!)
     }
@@ -92,8 +92,6 @@ extension TaskType : UITableViewDelegate,UITableViewDataSource
         cell.TaskIMG.image =  UIImage(named: TaskImage[indexPath.row])
         if SelectedIndex == indexPath.row
         {
-            
-            
             cell.TasknameLBL.font = UIFont(name:"system", size: 17.0)
             cell.TasknameLBL.textColor = .systemGray3
         }
@@ -101,17 +99,13 @@ extension TaskType : UITableViewDelegate,UITableViewDataSource
         {
             cell.TasknameLBL.textColor = .black
             cell.TasknameLBL.font = UIFont(name:"HelveticaNeue-Bold", size: 17.0)
-           
-          
         }
         return cell
         
-}
+    }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-    
-      
-            SelectedIndex = indexPath.row
-            tableview.reloadData()
+        SelectedIndex = indexPath.row
+        tableview.reloadData()
         
         
     }

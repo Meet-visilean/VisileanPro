@@ -2046,8 +2046,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q4g-ns-T8M">
                                 <rect key="frame" x="0.0" y="553.66666666666663" width="375" height="258.33333333333337"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start late task:-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cU5-g3-qld">
-                                        <rect key="frame" x="20" y="15" width="174" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start late task:-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cU5-g3-qld">
+                                        <rect key="frame" x="20" y="15" width="305" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
                                         <color key="textColor" red="0.094117647060000004" green="0.64313725489999995" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2202,7 +2202,7 @@
                                 <constraints>
                                     <constraint firstItem="YRX-fK-pEx" firstAttribute="leading" secondItem="Q4g-ns-T8M" secondAttribute="leading" constant="20" id="27W-Fj-9je"/>
                                     <constraint firstItem="YRX-fK-pEx" firstAttribute="top" secondItem="cU5-g3-qld" secondAttribute="bottom" constant="15" id="9AG-zW-n2b"/>
-                                    <constraint firstAttribute="trailing" secondItem="cU5-g3-qld" secondAttribute="trailing" constant="181" id="9Bw-Ik-cNT"/>
+                                    <constraint firstAttribute="trailing" secondItem="cU5-g3-qld" secondAttribute="trailing" constant="50" id="9Bw-Ik-cNT"/>
                                     <constraint firstAttribute="trailing" secondItem="A1R-Ih-GaB" secondAttribute="trailing" constant="50" id="GNx-qg-PMH"/>
                                     <constraint firstItem="cU5-g3-qld" firstAttribute="top" secondItem="Q4g-ns-T8M" secondAttribute="top" constant="15" id="Z10-XQ-F1F"/>
                                     <constraint firstItem="A1R-Ih-GaB" firstAttribute="leading" secondItem="Q4g-ns-T8M" secondAttribute="leading" constant="50" id="f5a-70-dkX"/>
@@ -2225,6 +2225,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="Title2LBL" destination="YRX-fK-pEx" id="cIv-gH-wGW"/>
+                        <outlet property="TitleLBL" destination="cU5-g3-qld" id="QeX-GH-V11"/>
                         <outlet property="closeBTN" destination="tSy-K3-dGv" id="p0M-yN-PRU"/>
                         <outlet property="coleView" destination="kc8-7I-fpb" id="tU0-jM-XgZ"/>
                         <outlet property="collectionView" destination="tyd-MU-kf3" id="stF-v6-tkp"/>
