@@ -11,17 +11,13 @@ import UIKit
 class TaskDetail: UIViewController {
     
     var taskdata : TaskListResult?
-   
-    @IBOutlet var TaskNameBTN: UIButton!
     
- 
+    @IBOutlet var TaskNameBTN: UIButton!
     @IBOutlet var userBL: UILabel!
     var relodeCollectionView : relodeCollectionViewPC!
     @IBOutlet var orgnameLBL: UILabel!
-
     @IBOutlet var DateStatusLBL: UILabel!
     @IBOutlet var DateofTaskLBL: UILabel!
-   
     @IBOutlet var LocationLBL: UILabel!
     @IBOutlet var QuantitiesLBL: UILabel!
     @IBOutlet var PlannedEndDateLBL: UILabel!
@@ -36,16 +32,13 @@ class TaskDetail: UIViewController {
     @IBOutlet var mainView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-      
+    
         selectedTaskguid = selectedTaskDetail.instance.selectedTask
-        print(selectedTaskguid)
-      
         ViewUpper.layer.cornerRadius = 100
         ViewUpper.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMaxYCorner)
         viewLower.layer.cornerRadius = 100
         viewLower.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner)
-    
+        
         UIchange(taskdata: taskdata!)
         
     }
@@ -54,20 +47,20 @@ class TaskDetail: UIViewController {
     {
         
         TaskNameBTN.setTitle("< \(taskdata.name)", for: .normal)
-      
+        
         LocationLBL.text = taskdata.activityLocation
         if(LocationLBL.text == "")
         {
             LocationLBL.text = "LOC"
         }
         orgnameLBL.text = taskdata.orgName
-    
-        quantitiy = taskdata.trackingQuantityEstimate ?? 0
+        
+        quantitiy = taskdata.trackingQuantityEstimate
         
         QuantitiesLBL.text = String(quantitiy)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
-        let startdate = dateFormatter.string(from: Date(milliseconds: taskdata.startDate ?? 0))
+        let startdate = dateFormatter.string(from: Date(milliseconds: taskdata.startDate ))
         let EndDate = dateFormatter.string(from: Date(milliseconds: Int64(taskdata.endDate )))
         PlannedStartDateLBL.text =  startdate
         PlannedEndDateLBL.text =   EndDate
@@ -77,14 +70,14 @@ class TaskDetail: UIViewController {
         constructionBTN.setTitle(taskdata.activityType, for: .normal)
         statusBTN.setTitle(statusOftask.0, for:.normal)
         //startBTN.backgroundColor = statusOftask.1
-       
+        
         ViewUpper.backgroundColor = statusOftask.1
         mainView.backgroundColor = ViewUpper.backgroundColor
         constructionBTN.setTitle(taskdata.activityType, for: .normal)
         
         statusBTN.layer.cornerRadius = 15
         statusBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
-    
+        
         
         constructionBTN.layer.cornerRadius = 15
         constructionBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
@@ -93,13 +86,13 @@ class TaskDetail: UIViewController {
         PriorityBTN.addShadow(offset: CGSize.init(width: 0, height: 2), color: UIColor.black, radius: 3, opacity: 0.45)
         
         
-//
+        //
     }
     
     @IBAction func StatusBTNclick(_ sender: Any) {
-      
+        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "statusViewController") as! statusViewController
-     
+        
         vc.TaskDetailData = taskdata
         vc.delegate = self
         
@@ -123,12 +116,12 @@ class TaskDetail: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
-
+    
 }
 extension TaskDetail : changeTaskdetailUI{
     func changeUI(taskdata: TaskListResult) {
         relodeCollectionView.reloadcolectionView()
         UIchange(taskdata: taskdata)
-      
+        
     }
 }

@@ -18,7 +18,7 @@ class ResonForLateViewController: UIViewController {
     var lateReasonmanager = latestartmanager()
     var reasons : [String] = []
     var lateresons : [latestartlistModel]?
-
+    
     var reasonsSend : [String] = []
     var delegate : resonforlateonstartBTN!
     var selectedreason : String = ""
@@ -67,7 +67,7 @@ class ResonForLateViewController: UIViewController {
                 let index = reasonsSend.firstIndex(of: lateresons![indxPath!.row].customReasonName)
                 reasonsSend.remove(at: index!)
             }
-
+            
             selectedRows.remove(at: selectedRows.firstIndex(of: indxPath!) ?? 0)
         } else {
             print(reasons[indx])
@@ -106,23 +106,23 @@ extension ResonForLateViewController:UITableViewDelegate,UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reasonsTableViewCell",for: indexPath as IndexPath) as? reasonsTableViewCell
-       
-    //    cell?.radioBTN.addTarget(self, action: #selector(checkboxClicked(_ :)), for: .touchUpInside)
-       
+        _ = tableView.dequeueReusableCell(withIdentifier: "reasonsTableViewCell",for: indexPath as IndexPath) as? reasonsTableViewCell
+        
+        //    cell?.radioBTN.addTarget(self, action: #selector(checkboxClicked(_ :)), for: .touchUpInside)
+        
         
         let indx = (indexPath.row)
-       
+        
         print(indx)
         if selectedRows.contains(indexPath) {
-         
-                let index = reasonsSend.firstIndex(of: lateresons![indexPath.row].customReasonName)
-                reasonsSend.remove(at: index!)
             
-
+            let index = reasonsSend.firstIndex(of: lateresons![indexPath.row].customReasonName)
+            reasonsSend.remove(at: index!)
+            
+            
             selectedRows.remove(at: selectedRows.firstIndex(of: indexPath) ?? 0)
         } else {
-           
+            
             reasonsSend.append(reasons[indx])
             selectedRows.append(indexPath)
         }

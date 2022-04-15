@@ -32,7 +32,7 @@ class LeaderBoardVM{
         if(i == 0){
             startLoader()
         }
-       
+        
         
         APImanager.sharedInstance.allcompletedtask(skip :skip ){(result) in
             switch result{
@@ -52,18 +52,18 @@ class LeaderBoardVM{
                     }
                     else if(resultArr.result.count == 0){
                         self.StopLoader()
-                     
+                        
                         //when resultarray is empty END loop
                         
                     }
-               
+                    
                 }
             case.failure(let err):
                 print(err.localizedDescription)
                 self.StopLoader()
             }
         }
-                return skip
+        return skip
         
     }
     

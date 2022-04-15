@@ -20,9 +20,9 @@ protocol LeaderBoardRepo{
 }
 
 struct LeaderBoardDataRepo : LeaderBoardRepo{
-  
     
-
+    
+    
     //-----add data into Core Data-----
     func adddata(TaskListresult: TaskListResult,responsibleactor : ResponsibleActor) {
         //
@@ -84,73 +84,73 @@ struct LeaderBoardDataRepo : LeaderBoardRepo{
             TaskList.append(tasklistcd.convertToTask())
         })
         return TaskList
-
-    }
-
-//    func updateStatusCode(taskListResult: TaskListResult) -> Bool {
-//
-//        let cdtaskdetail = getTaskDetails(byIdentifier: taskListResult.guid)
-//        guard cdtaskdetail != nil else {return false}
-//
-//        cdtaskdetail?.status = Int64(taskListResult.status)
-//
-//        PersistentStorage.shared.saveContext()
-//        return true
-//    }
-//
-    func getTaskDetails(byIdentifier guid: String) -> AllDataCD?
-   {
-       let fetchRequest = NSFetchRequest<AllDataCD>(entityName: "AllDataCD")
-       let predicate = NSPredicate(format: "guid==%@", guid as CVarArg)
-
-       fetchRequest.predicate = predicate
-       do {
-           let result = try PersistentStorageLeaderBoard.shared.context.fetch(fetchRequest).first
-
-           guard result != nil else {return nil}
-           return result
-
-       } catch let error {
-           debugPrint(error)
-       }
-
-       return nil
-   }
-   func get(byIdentifier guid: String) -> TaskListResultALL? {
-
-       let result = getTaskDetails(byIdentifier: guid)
-       guard result != nil else {return nil}
-       return result?.convertToTask()
-
-   }
-    func getlast7daydata(byIdentifier guid :String,startdate : Int,enddate : Int) -> [AllDataCD]?
-   {
-       let fetchRequest = NSFetchRequest<AllDataCD>(entityName: "AllDataCD")
         
-       let predicate = NSPredicate(format: "((actualEndDate >= %lld) AND (actualEndDate < %lld)) AND actorguid==%@",Int64(startdate),Int64(enddate),guid as CVarArg)
-      
-  
-       fetchRequest.predicate = predicate
-       do {
-           let result = try PersistentStorageLeaderBoard.shared.context.fetch(fetchRequest)
-
-           guard result != nil else {return nil}
-      
-           return result
-
-       } catch let error {
-           debugPrint(error)
-       }
-
-       return nil
-   }
+    }
+    
+    //    func updateStatusCode(taskListResult: TaskListResult) -> Bool {
+    //
+    //        let cdtaskdetail = getTaskDetails(byIdentifier: taskListResult.guid)
+    //        guard cdtaskdetail != nil else {return false}
+    //
+    //        cdtaskdetail?.status = Int64(taskListResult.status)
+    //
+    //        PersistentStorage.shared.saveContext()
+    //        return true
+    //    }
+    //
+    func getTaskDetails(byIdentifier guid: String) -> AllDataCD?
+    {
+        let fetchRequest = NSFetchRequest<AllDataCD>(entityName: "AllDataCD")
+        let predicate = NSPredicate(format: "guid==%@", guid as CVarArg)
+        
+        fetchRequest.predicate = predicate
+        do {
+            let result = try PersistentStorageLeaderBoard.shared.context.fetch(fetchRequest).first
+            
+            guard result != nil else {return nil}
+            return result
+            
+        } catch let error {
+            debugPrint(error)
+        }
+        
+        return nil
+    }
+    func get(byIdentifier guid: String) -> TaskListResultALL? {
+        
+        let result = getTaskDetails(byIdentifier: guid)
+        guard result != nil else {return nil}
+        return result?.convertToTask()
+        
+    }
+    func getlast7daydata(byIdentifier guid :String,startdate : Int,enddate : Int) -> [AllDataCD]?
+    {
+        let fetchRequest = NSFetchRequest<AllDataCD>(entityName: "AllDataCD")
+        
+        let predicate = NSPredicate(format: "((actualEndDate >= %lld) AND (actualEndDate < %lld)) AND actorguid==%@",Int64(startdate),Int64(enddate),guid as CVarArg)
+        
+        
+        fetchRequest.predicate = predicate
+        do {
+            let result = try PersistentStorageLeaderBoard.shared.context.fetch(fetchRequest)
+            
+            guard result != nil else {return nil}
+            
+            return result
+            
+        } catch let error {
+            debugPrint(error)
+        }
+        
+        return nil
+    }
     
     func gett(byIdentifier guid :String,startdate : Int,enddate : Int) ->Int {
-
+        
         let result = getlast7daydata(byIdentifier: guid,startdate : startdate,enddate : enddate)
         guard result != nil else {return 0}
         return result!.count
-
+        
     }
     
 }

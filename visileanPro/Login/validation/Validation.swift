@@ -25,9 +25,10 @@ struct LoginValidation{
         {
             return ValidationResult.init(result: false, message: "Please enter password")
         }
+        
         else
         {
-            return ValidationResult.init(result: true, message: " Check credential")
+            return ValidationResult.init(result: true, message: "valid id and pass")
             
         }
     }

@@ -13,7 +13,7 @@ class SideMenu: UITableViewController {
     var menu : SideMenuNavigationController?
     var items = ["","Dashboard","TaskList","LeaderBoard"]
     var ImageDetailMenu = ["house","house","list.bullet","person.fill"]
-    
+    private let cleadb = clearDB()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,18 +66,18 @@ class SideMenu: UITableViewController {
             return cell
             //second cell
         }
-            if(indexPath.row == 5 )
-            {
-                let cellSignout = tableView.dequeueReusableCell(withIdentifier:"signoutCell",for: indexPath) as! signoutCell
-                // cell.configure(with:"image1")
-                
-                cellSignout.SignoutLBL!.text = "Sign Out"
-                
-                return cellSignout
-                
-                
-            }
-          
+        if(indexPath.row == 5 )
+        {
+            let cellSignout = tableView.dequeueReusableCell(withIdentifier:"signoutCell",for: indexPath) as! signoutCell
+            // cell.configure(with:"image1")
+            
+            cellSignout.SignoutLBL!.text = "Sign Out"
+            
+            return cellSignout
+            
+            
+        }
+        
         
         tableView.reloadData()
         
@@ -86,8 +86,8 @@ class SideMenu: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      //  tableView.deselectRow(at:indexPath, animated: false)
-       
+        //  tableView.deselectRow(at:indexPath, animated: false)
+        
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let tabs = storyboard.instantiateViewController(withIdentifier: "tabbar") as! tabbar
@@ -111,21 +111,27 @@ class SideMenu: UITableViewController {
         else if(indexPath.row == 5)
         {
             
-            let alert = UIAlertController(title: "LogOut", message: "Are you sure want to LogOut?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Logout", message: "Are you sure want to Logout?", preferredStyle: .alert)
             // Create the actions
             let okAction = UIAlertAction(title: "YES", style:
-                                            UIAlertAction.Style.default) {
+                                            UIAlertAction.Style.default) { [weak self]
                 UIAlertAction in
                 print("Yes Pressed")
-                // Reset User Defaults
-                
+                // Reset User Default
+                APImanager.sharedInstance.callLogoutApi(){_ in
+                    print("logout Called Sidemenu")
+                    
+                }
                 
                 UserDefaults.standard.removeObject(forKey:"Login")
                 UserDefaults.standard.removeObject(forKey:"TOKEN")
                 UserDefaults.standard.removeObject(forKey:"email")
                 UserDefaults.standard.removeObject(forKey:"password")
-
+                self?.cleadb.clearCoreDBTaskList()
+                self?.cleadb.clearCoreDBDPR()
+                self?.cleadb.clearCoreDBlatestartReasons()
                 UserDefaults.resetDefaults()
+                
                 
                 Globe.shared.setLoginRoot()
             }
@@ -140,16 +146,8 @@ class SideMenu: UITableViewController {
             
             self.present(alert, animated: true, completion: nil)
             
-            
-            
-            
         }
-        
-        
     }
-    
-    
-    
 }
 extension UserDefaults {
     static func resetDefaults() {

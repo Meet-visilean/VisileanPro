@@ -1,8 +1,8 @@
 //
 //  DPR+CoreDataProperties.swift
-//  
+//  visileanPro
 //
-//  Created by Visilean Meet on 14/03/22.
+//  Created by Visilean Meet on 14/04/22.
 //
 //
 
@@ -23,6 +23,7 @@ extension DPR {
     @NSManaged public var activityType: String?
     @NSManaged public var actualEndDate: Int64
     @NSManaged public var actualStartDate: Int64
+    @NSManaged public var acurrentdate: Int64
     @NSManaged public var allCustomfields: String?
     @NSManaged public var approvedBy: Int64
     @NSManaged public var baselineEndDate: Int64
@@ -36,6 +37,7 @@ extension DPR {
     @NSManaged public var guid: String?
     @NSManaged public var hasChildren: Bool
     @NSManaged public var importID: String?
+    @NSManaged public var latestartreason: String?
     @NSManaged public var locationGUID: String?
     @NSManaged public var makeReadyDate: Int64
     @NSManaged public var name: String?
@@ -57,14 +59,14 @@ extension DPR {
     @NSManaged public var trackingUnit: Int32
     @NSManaged public var updatedAt: Int64
     @NSManaged public var warningDate: Int64
-    @NSManaged public var acurrentdate: Int64
-    @NSManaged public var latestartreason: [String]
     
-
-
-func convertToDPR()-> DPRmodel
-{
-    return DPRmodel(name :self.name ?? "", startdate: Int64(self.startDate), enddate: Int64(self.endDate), activitytype:  self.activityType ?? "activotyCD", status: Int(self.status), guid: self.guid ?? "", externalID: self.externalID ?? "",showExternalID: self.showExternalID ?? "", importID: self.importID ?? "importid",resultDescription: self.resultDescription ?? "notnill", activitySafety: self.activitySafety ?? "", createdAt: Int(self.createdAt), updatedAt: Int(self.updatedAt), actualStartDate: Int(self.actualStartDate), actualEndDate: self.actualEndDate, baselineStartDate: Int(self.baselineStartDate), baselineEndDate:  Int64(self.baselineEndDate), restartDate: Int(self.restartDate) , warningDate: Int(self.warningDate), activityPriority: Int(self.activityPriority), locationGUID: self.locationGUID ?? "LocationGuid", activityLocation: self.activityLocation ?? "activityLoaction", hasChildren: self.hasChildren, trackingQuantityEstimate: Int(self.trackingQuantityEstimate), trackingQuantityCurrent: Int(self.trackingQuantityCurrent),trackingUnit:Int32(self.trackingUnit) , completedPercentage: Int(self.completedPercentage), makeReadyDate: Int(self.makeReadyDate), parentGUID: self.parentGUID ?? "", projectGuid: self.projectGuid ?? "projectGuid", constrainingResourceRelations: self.constrainingResourceRelations ?? "" , constrainedActivity: self.constrainedActivity ?? "consactivity", owner: self.owner ?? "owner" , orgName: self.orgName ?? "orgname", parentName: self.parentName ?? "parentname", activityTrade: self.activityTrade ?? "activitytrade", stoppedDate: Int(self.stoppedDate), rejectedDate: Int(self.rejectedDate), approvedBy: Int(self.approvedBy), rejectedBy: Int(self.rejectedBy), allCustomfields: self.allCustomfields ?? "xustomfield",acurrentdate : Int64(self.acurrentdate),latestartreason : self.latestartreason)
-    
+    func convertToDPR()-> DPRmodel
+    {
+        return DPRmodel(name :self.name ?? "", startdate: Int64(self.startDate), enddate: Int64(self.endDate), activitytype:  self.activityType ?? "activotyCD", status: Int(self.status), guid: self.guid ?? "", externalID: self.externalID ?? "",showExternalID: self.showExternalID ?? "", importID: self.importID ?? "importid",resultDescription: self.resultDescription ?? "notnill", activitySafety: self.activitySafety ?? "", createdAt: Int(self.createdAt), updatedAt: Int(self.updatedAt), actualStartDate: Int(self.actualStartDate), actualEndDate: self.actualEndDate, baselineStartDate: Int(self.baselineStartDate), baselineEndDate:  Int64(self.baselineEndDate), restartDate: Int(self.restartDate) , warningDate: Int(self.warningDate), activityPriority: Int(self.activityPriority), locationGUID: self.locationGUID ?? "LocationGuid", activityLocation: self.activityLocation ?? "activityLoaction", hasChildren: self.hasChildren, trackingQuantityEstimate: Int(self.trackingQuantityEstimate), trackingQuantityCurrent: Int(self.trackingQuantityCurrent),trackingUnit:Int32(self.trackingUnit) , completedPercentage: Int(self.completedPercentage), makeReadyDate: Int(self.makeReadyDate), parentGUID: self.parentGUID ?? "", projectGuid: self.projectGuid ?? "projectGuid", constrainingResourceRelations: self.constrainingResourceRelations ?? "" , constrainedActivity: self.constrainedActivity ?? "consactivity", owner: self.owner ?? "owner" , orgName: self.orgName ?? "orgname", parentName: self.parentName ?? "parentname", activityTrade: self.activityTrade ?? "activitytrade", stoppedDate: Int(self.stoppedDate), rejectedDate: Int(self.rejectedDate), approvedBy: Int(self.approvedBy), rejectedBy: Int(self.rejectedBy), allCustomfields: self.allCustomfields ?? "xustomfield",acurrentdate : Int64(self.acurrentdate),latestartreason : self.latestartreason ?? "")
+        
+    }
 }
+
+extension DPR : Identifiable {
+
 }

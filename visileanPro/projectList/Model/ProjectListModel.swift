@@ -8,7 +8,8 @@
 import Foundation
 import SwiftyJSON
 
-struct ProjectListModel{
+struct ProjectListModel
+{
     var actualEndDate = 0;
     var actualStartDate = 0;
     var  baselineEndDate = 0

@@ -17,14 +17,14 @@ protocol latestartRepo{
 }
 
 struct latestartDataRepo : latestartRepo{
-
+    
     //-----add data into Core Data-----
     func createlatestartReason(latestartlistModel: latestartlistModel)
     {
         
         let cdadd = LatestartreasonCD(context: PersistentStorageLateStartReason.shared.context)
         
-            
+        
         cdadd.id = latestartlistModel.id
         cdadd.guid = latestartlistModel.guid
         cdadd.customReasonName = latestartlistModel.customReasonName
@@ -34,34 +34,34 @@ struct latestartDataRepo : latestartRepo{
         PersistentStorageLateStartReason.shared.saveContext()
     }
     
-
+    
     func getreson(byIdentifier guid: String) -> LatestartreasonCD?
-   {
-       let fetchRequest = NSFetchRequest<LatestartreasonCD>(entityName: "LatestartreasonCD")
-       let predicate = NSPredicate(format: "guid==%@", guid as CVarArg)
-
-       fetchRequest.predicate = predicate
-       do {
-           let result = try PersistentStorageLateStartReason.shared.context.fetch(fetchRequest).first
-
-           guard result != nil else {return nil}
-           return result
-
-       } catch let error {
-           debugPrint(error)
-       }
-
-       return nil
-   }
-
-
-   func get(byIdentifier guid: String) -> latestartlistModel? {
-
-       let result = getreson(byIdentifier: guid)
-       guard result != nil else {return nil}
-       return result?.convertToReason()
-       
-   }
+    {
+        let fetchRequest = NSFetchRequest<LatestartreasonCD>(entityName: "LatestartreasonCD")
+        let predicate = NSPredicate(format: "guid==%@", guid as CVarArg)
+        
+        fetchRequest.predicate = predicate
+        do {
+            let result = try PersistentStorageLateStartReason.shared.context.fetch(fetchRequest).first
+            
+            guard result != nil else {return nil}
+            return result
+            
+        } catch let error {
+            debugPrint(error)
+        }
+        
+        return nil
+    }
+    
+    
+    func get(byIdentifier guid: String) -> latestartlistModel? {
+        
+        let result = getreson(byIdentifier: guid)
+        guard result != nil else {return nil}
+        return result?.convertToReason()
+        
+    }
     
     func getall() -> [latestartlistModel]? {
         let result =  PersistentStorageLateStartReason.shared.fetchManagedObject(managedObject: LatestartreasonCD.self)
@@ -70,7 +70,7 @@ struct latestartDataRepo : latestartRepo{
             TaskList.append(tasklistcd.convertToReason())
         })
         return TaskList
-
+        
     }
-
+    
 }

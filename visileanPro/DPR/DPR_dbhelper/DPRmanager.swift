@@ -12,7 +12,7 @@ import CoreData
 struct DPRmanager{
     private let _DPRdatarepo = DPRdataRepo()
     
-    func createDPR(DPRmodel: TaskListResult,acurrentdate : Int,latestartreason:[String]) {
+    func createDPR(DPRmodel: TaskListResult,acurrentdate : Int,latestartreason:String) {
         _DPRdatarepo.createDPR(DPRmodel: DPRmodel, currentdate: acurrentdate,latestartreason:latestartreason)
     }
     

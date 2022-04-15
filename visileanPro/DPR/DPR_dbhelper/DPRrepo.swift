@@ -9,17 +9,17 @@ import Foundation
 import CoreData
 
 protocol DPRrepo{
-    func createDPR(DPRmodel: TaskListResult,currentdate : Int,latestartreason : [String])
+    func createDPR(DPRmodel: TaskListResult,currentdate : Int,latestartreason : String)
     func getall() -> [DPRmodel]?
-   func getDprData(byIdentifier status: Int,startdate : Int,enddate : Int) -> [DPR]?
+    func getDprData(byIdentifier status: Int,startdate : Int,enddate : Int) -> [DPR]?
     func get(byIdentifier status: Int,startdate : Int,enddate : Int) -> Int
     
 }
 
 struct DPRdataRepo : DPRrepo{
-
+    
     //-----add data into Core Data-----
-    func createDPR(DPRmodel: TaskListResult,currentdate : Int,latestartreason : [String]) {
+    func createDPR(DPRmodel: TaskListResult,currentdate : Int,latestartreason :String) {
         
         let cdDPR = DPR(context: PersistentStoragedpr.shared.context)
         
@@ -66,7 +66,7 @@ struct DPRdataRepo : DPRrepo{
         cdDPR.approvedBy = Int64(DPRmodel.approvedBy)
         cdDPR.rejectedBy = Int16(DPRmodel.rejectedBy)
         cdDPR.allCustomfields = DPRmodel.allCustomfields
-       
+        
         
         PersistentStoragedpr.shared.saveContext()
     }
@@ -79,48 +79,48 @@ struct DPRdataRepo : DPRrepo{
             TaskList.append(DPR.convertToDPR())
         })
         return TaskList
-
+        
     }
-
+    
     func updateStatusCode(DPRmodel: DPRmodel) -> Bool {
-
+        
         let cdtaskdetail = getTaskDetails(byIdentifier: DPRmodel.guid)
         guard cdtaskdetail != nil else {return false}
         
         cdtaskdetail?.status = Int64(DPRmodel.status)
-       
+        
         PersistentStoragedpr.shared.saveContext()
         return true
     }
-
+    
     func getDprData(byIdentifier status: Int,startdate : Int,enddate : Int) -> [DPR]?
-   {
-       let fetchRequest = NSFetchRequest<DPR>(entityName: "DPR")
+    {
+        let fetchRequest = NSFetchRequest<DPR>(entityName: "DPR")
         
-       let predicate = NSPredicate(format: "((acurrentdate >= %lld) AND (acurrentdate < %lld)) AND status==%i",Int64(startdate),Int64(enddate),status)
-     
-  
-       fetchRequest.predicate = predicate
-       do {
-           let result = try PersistentStoragedpr.shared.context.fetch(fetchRequest)
-
-           guard result != nil else {return nil}
-      
-           return result
-
-       } catch let error {
-           debugPrint(error)
-       }
-
-       return nil
-   }
-   func get(byIdentifier status: Int,startdate : Int,enddate : Int) -> Int {
-
-       let result = getDprData(byIdentifier: status,startdate : startdate,enddate : enddate)
-       guard result != nil else {return 0}
-     
-       return result!.count
-       
-   }
+        let predicate = NSPredicate(format: "((acurrentdate >= %lld) AND (acurrentdate < %lld)) AND status==%i",Int64(startdate),Int64(enddate),status)
+        
+        
+        fetchRequest.predicate = predicate
+        do {
+            let result = try PersistentStoragedpr.shared.context.fetch(fetchRequest)
+            
+            guard result != nil else {return nil}
+            
+            return result
+            
+        } catch let error {
+            debugPrint(error)
+        }
+        
+        return nil
+    }
+    func get(byIdentifier status: Int,startdate : Int,enddate : Int) -> Int {
+        
+        let result = getDprData(byIdentifier: status,startdate : startdate,enddate : enddate)
+        guard result != nil else {return 0}
+        
+        return result!.count
+        
+    }
     
 }

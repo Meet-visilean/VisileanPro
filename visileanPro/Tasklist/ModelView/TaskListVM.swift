@@ -10,7 +10,6 @@ import SwiftyJSON
 
 
 struct TaskListVM{
-    //  var delegate : ProjectViewModelDelegate?
     func startLoader(){SceneDelegate.ActivityIndicatorWithLabel.shared.showProgressView()
         print("taskListStratLoader")
     }
@@ -42,7 +41,7 @@ struct TaskListVM{
                     while(temp != 0)
                     {
                         let TaskListOBJ = TaskListResult.init(data: resultArr.result[i])
-                      var res = ResponsibleActor.init(data: JSON(rawValue: TaskListOBJ.responsibleactor) ?? 0)
+                        _ = ResponsibleActor.init(data: JSON(rawValue: TaskListOBJ.responsibleactor) ?? 0)
                 
                         let cddata =  manager.fetchTask()
                         if cddata?.count != 0

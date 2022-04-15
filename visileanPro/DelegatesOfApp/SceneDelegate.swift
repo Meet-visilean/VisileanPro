@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
           view = UIView(frame: UIScreen.main.bounds)
 
          view.backgroundColor = UIColorFromHex(rgbValue: 0xffffff, alpha: 0.7)
-         let imageData = NSData(contentsOf: Bundle.main.url(forResource: "loader", withExtension: "gif")!)
+         _ = NSData(contentsOf: Bundle.main.url(forResource: "loader", withExtension: "gif")!)
          let animatedImage = UIImage.gifImageWithName("loader")
           pinchImageView = UIImageView(image: animatedImage)
          pinchImageView.clipsToBounds = true

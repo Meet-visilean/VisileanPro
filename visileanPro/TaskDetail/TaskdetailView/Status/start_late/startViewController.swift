@@ -53,7 +53,7 @@ class startViewController: UIViewController {
     }
     
     
-   
+    
     @IBAction func resonforlateBTNtapped(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ResonForLateViewController") as! ResonForLateViewController
         vc.delegate = self
@@ -65,7 +65,7 @@ class startViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func SubmitBTNclick(_ sender: Any) {
-       //send selected resons to change status page
+        //send selected resons to change status page
         delegate.sendresonTochangestatus(arr: titles)
         self.dismiss(animated: true, completion: nil)
     }

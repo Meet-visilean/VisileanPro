@@ -72,7 +72,7 @@ class statusViewController: UIViewController {
          radioController.defaultButton = defaultselectedBTN.0
             
       
-        var enablestatus =  callForWorkForceOn(currentStatus: updatedTask!.status)
+        let enablestatus =  callForWorkForceOn(currentStatus: updatedTask!.status)
          disable(array : enablestatus)
          
     }
@@ -125,7 +125,7 @@ class statusViewController: UIViewController {
     
     
     @IBAction func submitBTNclick(_ sender: Any) {
-        
+        let joinedlatereasonarray = reasonsForlate.joined(separator: ",")
         let selectedBTNcode =  SelectedBTNstatusCode()
         var taskdetail = TaskDetailData
         taskdetail?.status = selectedBTNcode
@@ -146,7 +146,7 @@ class statusViewController: UIViewController {
         else
             {resonpageshow7 = false}
         
-    //    4-start,5-warning,6-stoped,7=complete,
+        //    4-start,5-warning,6-stoped,7=complete,
         if((selectedBTNcode == 4 && resonpageshow4 == true) || (selectedBTNcode == 7 && resonpageshow7 == true) || selectedBTNcode == 5 || selectedBTNcode == 6 )
         {
             if(reasonsForlate.count == 0)
@@ -175,10 +175,11 @@ class statusViewController: UIViewController {
                 
             }
             else{
+                
                 manager.updateTaskStauts(taskListResult: taskdetail!)
                
                 let updatedTask =  manager.gettaskdetaibyguid(guid: taskdetail!.guid)
-                dprmanager.createDPR(DPRmodel: updatedTask!, acurrentdate: currentdate,latestartreason: reasonsForlate)
+                dprmanager.createDPR(DPRmodel: updatedTask!, acurrentdate: currentdate,latestartreason: joinedlatereasonarray)
                 
                 //manager.createTask(TaskListresult: TaskListOBJ, responsibleactor: resOBJ)
                 self.dismiss(animated: true, completion: nil)
@@ -194,7 +195,7 @@ class statusViewController: UIViewController {
            
             let updatedTask =  manager.gettaskdetaibyguid(guid: taskdetail!.guid)
             currentdate = Int(Date().millisecondsSince1970)
-            dprmanager.createDPR(DPRmodel: updatedTask!, acurrentdate: currentdate,latestartreason: reasonsForlate)
+            dprmanager.createDPR(DPRmodel: updatedTask!, acurrentdate: currentdate,latestartreason: joinedlatereasonarray)
             self.dismiss(animated: true, completion: nil)
     
             delegate.changeUI(taskdata: updatedTask!)
@@ -246,7 +247,7 @@ class statusViewController: UIViewController {
         }
         else if currentStatus == 4
         {
-          enableStatus = [0,1,2,3,8,9]  //4,5,6,7
+          enableStatus = [0,1,2,3,8,9]      //4,5,6,7
         }
         else if currentStatus == 5
         {

@@ -24,12 +24,12 @@ struct latestartReasonVM{
         let projctdata = UserDefaults.standard.dictionary(forKey: "ProjectListDict")
         //nil because project API not called
         let projectGUID = projctdata!["guid"] as! String
-      
-      
+        
+        
         APImanager.sharedInstance.LastestartAPIcall(param: projectGUID ){(result) in
             switch result{
             case.success(let json):
-            
+                
                 let resultArr = lateStartResponseModel.init(data: JSON(rawValue: json!) ?? "JSON")
                 if resultArr.status == 1
                 {
@@ -38,14 +38,14 @@ struct latestartReasonVM{
                     while(temp != 0)
                     {
                         let lateresonOBJ = latestartlistModel.init(data: resultArr.result[i])
-                       let cddata =  manager.fetchTask()
+                        let cddata =  manager.fetchTask()
                         if cddata?.count != 0
                         {
                             let resonsdata = manager.get(byIdentifier: lateresonOBJ.guid)
                             if resonsdata?.guid == nil
                             {
                                 print("specific  data add to coredata")
-                               manager.createlatestartReason(latestartlistModel: lateresonOBJ)
+                                manager.createlatestartReason(latestartlistModel: lateresonOBJ)
                             }
                         }
                         else
@@ -58,11 +58,11 @@ struct latestartReasonVM{
                     }
                     StopLoader()
                 }
-            
+                
                 
             case.failure(let err):
                 print(err.localizedDescription)
-              StopLoader()
+                StopLoader()
                 
                 
             }

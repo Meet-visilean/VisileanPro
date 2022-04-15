@@ -22,7 +22,6 @@ extension LatestartreasonCD {
     @NSManaged public var ordinal: Int32
 
     
-    
     func convertToReason()-> latestartlistModel
     {
         return latestartlistModel(id :self.id ?? "", guid: self.guid ?? "" , customReasonName:  self.customReasonName ?? "", ordinal: Int(self.ordinal )  )

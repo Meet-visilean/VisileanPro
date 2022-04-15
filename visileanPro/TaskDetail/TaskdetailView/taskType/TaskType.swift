@@ -29,11 +29,10 @@ class TaskType: UIViewController {
         mainView.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner,.layerMinXMinYCorner)
         mainView.addShadow(offset: CGSize.init(width: 3, height: 3), color: UIColor.black, radius: 5.0, opacity: 0.35)
         submitBNT.layer.cornerRadius = 15
-        
-        submitBNT.addShadow(offset: CGSize.init(width: 2, height: 3), color: UIColor.black, radius: 3, opacity: 0.35)
         closeBTN.layer.cornerRadius = 15
-        
         closeBTN.addShadow(offset: CGSize.init(width: 2, height: 3), color: UIColor.black, radius: 3, opacity: 0.35)
+        submitBNT.addShadow(offset: CGSize.init(width: 2, height: 3), color: UIColor.black, radius: 3, opacity: 0.35)
+        
         tableview.reloadData()
         
         // Do any additional setup after loading the view.

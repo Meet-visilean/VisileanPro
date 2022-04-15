@@ -23,6 +23,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBOutlet var taskListView: UIView!
     var TaskListData : [TaskListResult]? = nil
     private let manager = TaskListManager()
+    
     @IBOutlet var HeaderCollectionView: UICollectionView!
     @IBOutlet var collectionViewMain: UICollectionView!
     
@@ -30,6 +31,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBOutlet var mainView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         setupNavigationBar(navBar: navBar)
         taskListView.layer.cornerRadius = 40
@@ -48,7 +50,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
         collectionViewMain.layer.cornerRadius = 40
         collectionViewMain.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner)
         
-    
+        
         
         self.SelectedIndex = 0
         collectionViewMain.scrollToItem(at:IndexPath(item: SelectedIndex, section: 0), at: .right, animated: true)
@@ -57,14 +59,15 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
         
     }
     
+    
     @IBAction func refreshBTNclick(_ sender: Any) {
         
-     
-            let Tasklist = TaskListVM()
-            Tasklist.callTaskListApi()
+        
+        let Tasklist = TaskListVM()
+        Tasklist.callTaskListApi()
         let ProjectList = ProjectListVM()
-        ProjectList.callProjectListing()    
-            
+        ProjectList.callProjectListing()
+        
         
     }
     
@@ -118,13 +121,13 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
             case 4:
                 SelectedIndex = indexPath.row
                 slideToNext()
-             
+                
                 HeaderCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
                 
             case 5:
                 SelectedIndex = indexPath.row
                 slideToNext()
-             
+                
                 HeaderCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
                 
             default:  print("break")
@@ -144,7 +147,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
             cell.taskClickDelegate = self
             cell.collectionIndex = indexPath.row//SelectedIndex
             cell.setupTableData()
-          
+            
             return cell
         }
         else
@@ -197,7 +200,7 @@ class TaskCollection: UIViewController,UICollectionViewDelegate,UICollectionView
                 headerCell.HeaderLBL.font = UIFont(name:"System", size: 17.0)
                 headerCell.SepratorView.backgroundColor = .white
             }
-
+            
             return headerCell
         }
         
@@ -280,7 +283,7 @@ extension TaskCollection : TaskCellClick{
 extension TaskCollection : relodeCollectionViewPC{
     func reloadcolectionView() {
         collectionViewMain.reloadData()
-       
+        
     }
     
 }

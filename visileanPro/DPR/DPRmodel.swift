@@ -50,12 +50,12 @@ struct DPRmodel {
     let  rejectedBy: Int
     let allCustomfields: String
     let acurrentdate : Int64
-    let latestartreason : [String]
+    let latestartreason : String
 
    
     
     
-    init(name : String ,startdate : Int64,enddate : Int64,activitytype : String,status : Int,guid : String,externalID : String,showExternalID:String,importID:String,resultDescription:String,activitySafety : String,createdAt:Int,updatedAt:Int,actualStartDate:Int,actualEndDate:Int64,baselineStartDate:Int,baselineEndDate:Int64,restartDate:Int,warningDate:Int,activityPriority:Int,locationGUID:String,activityLocation:String,hasChildren:Bool,trackingQuantityEstimate:Int,trackingQuantityCurrent:Int,trackingUnit:Int32,completedPercentage:Int,makeReadyDate:Int,parentGUID:String,projectGuid:String,constrainingResourceRelations:String,constrainedActivity:String,owner:String,orgName:String,parentName:String,activityTrade:String,stoppedDate:Int,rejectedDate:Int,approvedBy:Int,rejectedBy:Int,allCustomfields:String,acurrentdate : Int64,latestartreason : [String])
+    init(name : String ,startdate : Int64,enddate : Int64,activitytype : String,status : Int,guid : String,externalID : String,showExternalID:String,importID:String,resultDescription:String,activitySafety : String,createdAt:Int,updatedAt:Int,actualStartDate:Int,actualEndDate:Int64,baselineStartDate:Int,baselineEndDate:Int64,restartDate:Int,warningDate:Int,activityPriority:Int,locationGUID:String,activityLocation:String,hasChildren:Bool,trackingQuantityEstimate:Int,trackingQuantityCurrent:Int,trackingUnit:Int32,completedPercentage:Int,makeReadyDate:Int,parentGUID:String,projectGuid:String,constrainingResourceRelations:String,constrainedActivity:String,owner:String,orgName:String,parentName:String,activityTrade:String,stoppedDate:Int,rejectedDate:Int,approvedBy:Int,rejectedBy:Int,allCustomfields:String,acurrentdate : Int64,latestartreason : String)
     {
       
         self.name = name
@@ -100,6 +100,6 @@ struct DPRmodel {
         self.rejectedBy=rejectedBy
         self.allCustomfields=allCustomfields
         self.acurrentdate=acurrentdate
-        self.latestartreason=latestartreason
+        self.latestartreason = latestartreason
     }
 }
